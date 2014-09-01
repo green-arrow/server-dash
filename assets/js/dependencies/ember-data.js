@@ -1,0 +1,1 @@
+../../../bower_components/ember-data/ember-data.js

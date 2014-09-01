@@ -1,0 +1,24 @@
+{
+  "name": "server-dash",
+  "version": "0.0.1",
+  "authors": [
+    "Andrew Walton"
+  ],
+  "description": "A customizable dashboard to monitor your Linux server.",
+  "main": "app.js",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "handlebars": "~1.3.0",
+    "ember": "~1.7.0",
+    "jquery": "~2.1.1",
+    "ember-data": "1.0.0-beta.9"
+  }
+}

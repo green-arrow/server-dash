@@ -1,0 +1,24 @@
+<div class="sidebar">
+
+</div>
+
+<ul>
+    {{#each profile in model.profiles}}
+        <li>
+            {{profile.name}}
+
+            {{#if profile.widgets.length}}
+                <ul>
+                    {{#each widget in profile.widgets}}
+                        <li>
+                            {{widget.displayName}}
+                            {{render-widget widget.name data=model.widgetData}}
+                        </li>
+                    {{/each}}
+                </ul>
+            {{/if}}
+        </li>
+    {{/each}}
+</ul>
+
+{{widget-general}}

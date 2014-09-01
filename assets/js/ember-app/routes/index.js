@@ -5,7 +5,7 @@ ServerDash.IndexRoute = Ember.Route.extend({
         return {
             profiles: this.store.find('profile'),
             widgetData: {
-                general: this.store.find('widgetGeneral') //generalAdapter.create().getData(this.store)
+                general: this.store.find('widgetGeneral', 1) //generalAdapter.create().getData(this.store)
             }
         };
     }

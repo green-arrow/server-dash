@@ -28,12 +28,11 @@ var jsFilesToInject = [
 
   // Load jQuery before ember loads
   'js/dependencies/jquery.js',
-
-  // Load handlebars before ember loads
   'js/dependencies/handlebars.js',
-
-  // Load ember before ember-data loads
   'js/dependencies/ember.js',
+  'js/dependencies/ember-data.js',
+  'js/dependencies/packery.pkgd.js',
+  'js/dependencies/draggabilly.js',
 
   // Dependencies like jQuery, or Angular are brought in here
   'js/dependencies/**/*.js',

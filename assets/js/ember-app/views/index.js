@@ -7,20 +7,29 @@ ServerDash.IndexView = Ember.View.extend({
         ServerDash.Dashboard.initialize();
 
         var onProfileChange = function (e) {
-            var index = e ? Ember.$(e.target).data("index") : 0;
+            var profileId = e ? Ember.$(e.target).parents('.profile-icon').data("target") : 1,
+                packeryElements = Ember.$('.packery'),
+                index;
 
-            ServerDash.Dashboard.updateActiveView(index);
+            for(var i = 0, len = packeryElements.length; i < len; i++) {
+                if (Ember.$(packeryElements[i]).data('profile-id') === profileId) {
+                    index = i;
+                    break;
+                }
+            }
 
-            // Update icon images
-            Ember.$('.sidebar .icon[data-index]').removeClass('active');
-            Ember.$('.sidebar .icon[data-index="' + ServerDash.Dashboard.getActiveIndex() + '"]').addClass('active');
+            if(ServerDash.Dashboard.updateActiveView(index)) {
+                // Update icon images
+                Ember.$('.sidebar .profile-icon[data-target]').removeClass('active');
+                Ember.$('.sidebar .profile-icon[data-target="' + profileId + '"]').addClass('active');
+            }
         };
 
         // Add next action to animate button.
-        Ember.$('.sidebar .icon[data-index]').on('click', onProfileChange);
+        Ember.$('.sidebar .profile-icon[data-target]').on('click', onProfileChange);
 
         // Add widget screen
-        Ember.$('.sidebar .icon.add').on('click', function () {
+        Ember.$('.sidebar .profile-icon.add').on('click', function () {
             ServerDash.Dashboard.showAddWidget();
         });
 

@@ -55,8 +55,24 @@ header {
   top: 76px;
   bottom: 0;
   left: 0;
-  width: 100px;
+  width: 125px;
   padding-top: 1%;
+
+  .profile-icon {
+    text-align: center;
+    margin-bottom: 20px;
+    cursor: pointer;
+
+    .fa {
+      display: block;
+      margin-top: 5px;
+      margin-bottom: 5px;
+    }
+
+    &.active {
+      color: rgb(0, 169, 255);
+    }
+  }
 }
 
 /* Main Content */

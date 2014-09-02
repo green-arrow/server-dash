@@ -49,7 +49,7 @@ var jsFilesToInject = [
 // Client-side HTML templates are injected using the sources below
 // The ordering of these templates shouldn't matter.
 // (uses Grunt-style wildcard/glob/splat expressions)
-//
+//d
 // By default, Sails uses JST templates and precompiles them into
 // functions for you.  If you want to use jade, handlebars, dust, etc.,
 // with the linker, no problem-- you'll just want to make sure the precompiled

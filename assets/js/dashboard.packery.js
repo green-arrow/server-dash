@@ -148,7 +148,7 @@
                 return this;
             },
             offset: function () {
-                container.find('.content').each(function (index, value) {
+                container.find('.widget-wrapper').each(function (index, value) {
                     var $value = $(value),
                         offsetTop = 300 - (Math.floor(Math.random() * 16) + 10) * 20,
                         offsetLeft = 300 - (Math.floor(Math.random() * 16) + 10) * 20;
@@ -165,7 +165,7 @@
             },
             align: function () {
                 setTimeout(function () {
-                    container.find('.content').css({
+                    container.find('.widget-wrapper').css({
                         'top': '0',
                         'left': '0',
                         'right': '0',

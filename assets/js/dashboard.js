@@ -1,7 +1,7 @@
 ﻿(function () {
     window.Dashboard = function (selector, options) {
         var packeryArray = [],
-            active = 0,
+            active = -1,
             localOptions = $.extend(true, {
                 widgetSelector: '.item',
                 methods: {
@@ -296,14 +296,22 @@
                 var container = displayAddWidgetUI();
             },
             updateActiveView: function (index) {
-                if (active !== index) {
-                    // Hide Current Packery.
-                    packeryArray[active].offset().hide();
+                var success = true;
+
+                if(index !== undefined && active !== index) {
+                    if(active >= 0) {
+                        // Hide Current Packery.
+                        packeryArray[active].offset().hide();
+                    }
+
+                    // Show Next Packery
+                    active = index;
+                    packeryArray[active].align().show();
+                } else if(index === undefined) {
+                    success = false;
                 }
 
-                // Show Next Packery
-                active = index;
-                packeryArray[active].align().show();
+                return success;
             },
             getActiveIndex: function () {
                 return active;

@@ -18,6 +18,9 @@
  * `node app.js --silent --port=80 --prod`
  */
 
+// Perform application setup
+var setup = require('./setup.js');
+
 // Ensure a "sails" can be located:
 (function() {
   var sails;

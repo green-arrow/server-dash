@@ -20,8 +20,11 @@ npm install
 bower install
 ```
 
-Run the application (by default this will be located at ``http://localhost:1337/``
+Run the application (by default this will be located at ``http://localhost:1337/``)
+
+NOTE: It is important to use the following command. ``app.js`` has been modified to
+run a setup script that auto-generates necessary database records.
 
 ```
-sails lift
+node app.js
 ```

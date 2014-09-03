@@ -1,9 +1,4 @@
 ServerDash.ApplicationAdapter =  DS.RESTAdapter.extend({
-    host: 'http://jsonstub.com',
-    headers: {
-        'JsonStub-User-Key': 'cdc147a1-e0b3-4ebf-bee2-7d1024cf2670',
-        'JsonStub-Project-Key': '125eb655-ba7a-454f-a2ca-f6e63847e7ff'
-    },
     find: function(store, type, id, record) {
         var split = type.typeKey.split('widget'),
             isWidget = split.length === 2 && split[0] === '',
@@ -16,7 +11,7 @@ ServerDash.ApplicationAdapter =  DS.RESTAdapter.extend({
             host = this.get('host'),
             prefix = this.urlPrefix();
 
-        url.push('widgetData/' + widgetType);
+        url.push('widgets/' + widgetType);
 
         if (prefix) { url.unshift(prefix); }
 

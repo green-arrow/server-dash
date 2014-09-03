@@ -29,13 +29,13 @@ db.users.find({email: email}, function(err, users) {
         sails.log.info('Located default user, skipping user generation.');
     } else {
         sails.log.info('Generating default user...');
-        generateDefaultUser(function() {
-            // TODO: generate available widgets
-        });
+        generateDefaultUser();
     }
 });
 
-var generateDefaultUser = function(callback) {
+// TODO: generate available widgets
+
+var generateDefaultUser = function() {
     bcrypt.genSalt(10, function(err, salt) {
         if(err) {
             sails.log.error('Failed to generate salt with bcrypt.\n', err);
@@ -54,8 +54,6 @@ var generateDefaultUser = function(callback) {
                             sails.log.info('Please use the following credentials for your initial login.');
                             sails.log.info('Email: ', email);
                             sails.log.info('Password: ', password);
-
-                            callback.call();
                         }
                     });
                 }

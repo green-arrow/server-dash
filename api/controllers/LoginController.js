@@ -28,6 +28,7 @@ module.exports = {
                     } else {
                         if(hash === user.password) {
                             sails.log.info('Password validated successfully');
+                            req.session.authenticated = true;
                             req.session.user = user;
                             res.redirect('/');
                         } else {

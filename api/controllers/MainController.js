@@ -7,11 +7,7 @@
 
 module.exports = {
 	index: function(req, res) {
-        if(req.session.user) {
-            res.view();
-        } else {
-            res.redirect('/login');
-        }
+        res.view();
     }
 };
 

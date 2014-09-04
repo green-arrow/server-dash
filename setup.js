@@ -10,7 +10,7 @@ sails.log.info('Running server-dash application setup.');
 
 var dbConfig = require('./config/connections').connections.mongoDb;
 var databaseURI = dbConfig.host + ':' + dbConfig.port + '/' + dbConfig.database;
-var collections = ["user", "widgets"];
+var collections = ["user", "widget"];
 
 sails.log.info('Connecting to MongoDB: ', databaseURI)
 
@@ -33,7 +33,17 @@ db.user.find({email: email}, function(err, users) {
     }
 });
 
-// TODO: generate available widgets
+db.widget.find({}, function(err, widgets) {
+    if(err) {
+        sails.log.error('Failed widget lookup.\n', err);
+        process.exit(1);
+    } else if(widgets.length > 0) {
+        sails.log.info('Found widgets in database, skipping widget generation.');
+    } else {
+        sails.log.info('Generating widget database records.');
+        generateWidgets();
+    }
+});
 
 var generateDefaultUser = function() {
     bcrypt.genSalt(10, function(err, salt) {
@@ -58,6 +68,19 @@ var generateDefaultUser = function() {
                     });
                 }
             });
+        }
+    });
+};
+
+var generateWidgets = function() {
+    var widgets = require('./widgets.js');
+
+    db.widget.insert(widgets, function(err, saved) {
+        if(err || !saved) {
+            sails.log.error('Failed to generate widgets.\n', err || '');
+            process.exit(1);
+        } else {
+            sails.log.info('Widgets successfully created.');
         }
     });
 };

@@ -15,7 +15,7 @@ module.exports = {
 
         sails.log.info('Processing login for ' + email);
 
-        Users.findOneByEmail(email).then(function(user) {
+        User.findOneByEmail(email).then(function(user) {
             if (user) {
                 sails.log.info('User lookup successful, validating passwords now.');
 

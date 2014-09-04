@@ -10,7 +10,7 @@ sails.log.info('Running server-dash application setup.');
 
 var dbConfig = require('./config/connections').connections.mongoDb;
 var databaseURI = dbConfig.host + ':' + dbConfig.port + '/' + dbConfig.database;
-var collections = ["users", "widgets"];
+var collections = ["user", "widgets"];
 
 sails.log.info('Connecting to MongoDB: ', databaseURI)
 
@@ -21,7 +21,7 @@ sails.log.info('Successfully connected to MongoDB instance.');
 var email = 'admin@localhost',
     password = 'Adm!n';
 
-db.users.find({email: email}, function(err, users) {
+db.user.find({email: email}, function(err, users) {
     if(err) {
         sails.log.error('Failed user lookup.\n', err);
         process.exit(1);
@@ -46,7 +46,7 @@ var generateDefaultUser = function() {
                     sails.log.error('Failed to generate password hash with bcrypt.\n', err);
                     process.exit(1);
                 } else {
-                    db.users.save({email: email, password: hash, salt: salt}, function (err, saved) {
+                    db.user.save({email: email, password: hash, salt: salt}, function (err, saved) {
                         if (err || !saved) {
                             sails.log.error('Failed to create default user.\n', err || '');
                         } else {

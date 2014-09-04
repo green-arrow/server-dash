@@ -7,7 +7,7 @@
 var execOpts = { silent: true };
 
 exports.getOsInfo = function() {
-    return exec('uname -srm', execOpts).output;
+    return exec('uname -sr', execOpts).output;
 };
 
 exports.getUptime = function() {

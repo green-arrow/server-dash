@@ -1,5 +1,5 @@
 /**
-* User.js
+* ProfileWidget.js
 *
 * @description :: TODO: You might write a short summary of how this model works and what it represents here.
 * @docs        :: http://sailsjs.org/#!documentation/models
@@ -7,10 +7,14 @@
 
 module.exports = {
 
-  attributes: {
-    email: 'STRING',
-    password: 'STRING',
-    salt: 'STRING'
-  }
+    attributes: {
+        sortOrder: 'number',
+        profile: {
+            model: 'profile'
+        },
+        widget: {
+            model: 'widget'
+        }
+    }
 };
 

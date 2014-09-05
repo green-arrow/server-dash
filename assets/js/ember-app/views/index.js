@@ -11,7 +11,7 @@ ServerDash.IndexView = Ember.View.extend({
                 index, profileId;
 
             if(e) {
-                profileId = Ember.$(e.target).parents('.profile-icon').data('target');
+                profileId = Ember.$(e.target).closest('.profile-icon').data('target');
             } else {
                 profileId = Ember.$('.sidebar .profile-icon[data-target]:first').data('target');
             }

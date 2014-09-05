@@ -57,41 +57,37 @@
     background-color: #fff;
     .transition(all 0.7s ease-in-out);
 
-    div.ember-view {
-      height: 100%;
+    /* other items appear above the handle */
+    > * {
+      position: relative;
+    }
 
-      /* other items appear above the handle */
-      > * {
-        position: relative;
-      }
+    .header {
+      font-size: 1.2em;
+      color: #9d9fa2;
+      font-weight: bold;
+      margin-top: 0;
+      cursor: move;
+    }
 
-      .header {
-        font-size: 1.2em;
-        color: #9d9fa2;
-        font-weight: bold;
-        margin-top: 0;
-        cursor: move;
-      }
+    .handle {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      cursor: move;
+      z-index: 0;
+    }
 
-      .handle {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        cursor: move;
-        z-index: 0;
-      }
-
-      .content-wrapper {
-        top: 50px;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        overflow: auto;
-        padding: 10px;
-        position: absolute;
-      }
+    .content-wrapper {
+      top: 30px;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      overflow: auto;
+      padding: 10px;
+      position: absolute;
     }
   }
 

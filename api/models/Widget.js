@@ -8,8 +8,19 @@
 module.exports = {
 
     attributes: {
-        name: 'STRING',
-        displayName: 'STRING',
+        id: {
+            type: 'integer',
+            primaryKey: true,
+            required: true
+        },
+        name: {
+            type: 'string',
+            required: true
+        },
+        displayName: {
+            type: 'string',
+            required: true
+        },
         profileWidgets: {
             collection: 'profileWidget',
             via: 'widget'

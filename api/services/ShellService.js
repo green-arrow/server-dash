@@ -4,6 +4,8 @@
  * @description :: A service for getting information via shell commands
  */
 
+require('shelljs/global');
+
 var execOpts = { silent: true };
 
 exports.getOsInfo = function() {

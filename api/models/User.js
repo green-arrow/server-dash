@@ -8,9 +8,20 @@
 module.exports = {
 
   attributes: {
-    email: 'STRING',
-    password: 'STRING',
-    salt: 'STRING',
+    email: {
+        type: 'email',
+        required: true,
+        index: true,
+        unique: true
+    },
+    password: {
+        type: 'string',
+        required: true
+    },
+    salt: {
+        type: 'string',
+        required: true
+    },
     profiles: {
         collection: 'profile',
         via: 'user'

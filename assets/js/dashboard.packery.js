@@ -15,7 +15,7 @@
 
                             packery.options.rowHeight = getRowHeight();
 
-                            container.children(localOptions.packeryOptions.itemSelector).each(function () {
+                            container.find(localOptions.packeryOptions.itemSelector).each(function () {
                                 var $this = $(this),
                                     width = $this.width(),
                                     multiplier = getWidgetHeight($this) || Math.floor(width / singleWidth),

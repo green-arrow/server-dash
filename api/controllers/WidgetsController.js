@@ -4,7 +4,6 @@
  * @description :: Server-side logic for managing widgets
  * @help        :: See http://links.sailsjs.org/docs/controllers
  */
-require('shelljs/global');
 
 module.exports = {
 	general: function(req, res) {

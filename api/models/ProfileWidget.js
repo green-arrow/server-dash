@@ -8,7 +8,9 @@
 module.exports = {
 
     attributes: {
-        sortOrder: 'number',
+        sortOrder: {
+            type: 'integer'
+        },
         profile: {
             model: 'profile'
         },

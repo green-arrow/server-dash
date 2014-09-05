@@ -7,6 +7,36 @@
 
 module.exports = {
 	index: function(req, res) {
+        var userId = req.session.user.id,
+            getProfiles = function() {
+                ProfileService.getUserProfiles(userId, function(err, profiles) {
+                    if(err) {
+                        sails.log.error('Error in retrieving user profiles: ', err);
+                        //res.send(500, { error: 'Error in retrieving user profiles.' });
+                    } else {
+                        //res.ok(profiles);
+                    }
+                });
+            };
+
+        User.findOne(userId).exec(function(err, user) {
+            if(!user.profiles.length) {
+                sails.log.info('No profiles exist for user ' + user.email + '.');
+                sails.log.info('Generating profiles now.');
+                ProfileService.generateUserProfiles(userId, function(err) {
+                    if(err) {
+                        sails.log.error('Error in generating user profiles.\n', err);
+                    } else {
+                        getProfiles();
+                    }
+                });
+            } else {
+                getProfiles();
+            }
+        });
+
+        // NOTE: We're returning this for now because we need to update the front end to
+        // take into account the new structure (profile -> profileWidget -> widget instead of profile -> widget)
         res.ok({
             "profiles": [
                 {

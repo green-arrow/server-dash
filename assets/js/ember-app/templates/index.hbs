@@ -11,8 +11,8 @@
     <div class="packery" {{bind-attr data-profile-id="profile.id"}}>
         <div class="grid-sizer"></div>
         <div class="gutter-sizer"></div>
-        {{#each widget in profile.widgets}}
-            {{render-widget widget.name title=widget.displayName data=widgetData}}
+        {{#each profileWidget in profile.profileWidgets}}
+            {{render-widget profileWidget.widget.name title=profileWidget.widget.displayName data=widgetData}}
         {{/each}}
     </div>
 {{/each}}

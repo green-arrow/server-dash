@@ -16,6 +16,12 @@ module.exports = {
         },
         widget: {
             model: 'widget'
+        },
+        toJSON: function() {
+            var obj = this.toObject();
+            delete obj.createdAt;
+            delete obj.updatedAt;
+            return obj;
         }
     }
 };

@@ -22,6 +22,13 @@ module.exports = {
         profileWidgets: {
             collection: 'profileWidget',
             via: 'profile'
+        },
+        toJSON: function() {
+            var obj = this.toObject();
+            obj.profileWidgets = this.profileWidgets;
+            delete obj.createdAt;
+            delete obj.updatedAt;
+            return obj;
         }
     }
 };

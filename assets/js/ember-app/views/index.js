@@ -7,9 +7,14 @@ ServerDash.IndexView = Ember.View.extend({
         ServerDash.Dashboard.initialize();
 
         var onProfileChange = function (e) {
-            var profileId = e ? Ember.$(e.target).parents('.profile-icon').data("target") : 1,
-                packeryElements = Ember.$('.packery'),
-                index;
+            var packeryElements = Ember.$('.packery'),
+                index, profileId;
+
+            if(e) {
+                profileId = Ember.$(e.target).parents('.profile-icon').data('target');
+            } else {
+                profileId = Ember.$('.sidebar .profile-icon[data-target]:first').data('target');
+            }
 
             for(var i = 0, len = packeryElements.length; i < len; i++) {
                 if (Ember.$(packeryElements[i]).data('profile-id') === profileId) {

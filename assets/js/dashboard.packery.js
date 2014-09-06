@@ -7,6 +7,7 @@
                 deferTimeout: 10,
                 visibleItemSelector: '.visible-item',
                 methods: {
+                    beforeInitialLayout: function() { },
                     layoutUpdated: function () { },
                     resize: function () {
                         if (container.is(":visible")) {
@@ -37,6 +38,7 @@
                     }
                 },
                 packeryOptions: {
+                    isInitLayout: false,
                     columnWidth: '.grid-sizer',
                     gutter: '.gutter-sizer',
                     itemSelector: '.item'
@@ -93,6 +95,9 @@
                 }, localOptions.packeryOptions)).data('packery');
 
                 connect.apply(this);
+
+                localOptions.methods.beforeInitialLayout(packery);
+
                 packery.layout();
 
                 if (hidden) {

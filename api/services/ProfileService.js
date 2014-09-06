@@ -71,3 +71,30 @@ exports.getUserProfiles = function(userId, callback) {
         callback(err, results.map);
     });
 };
+
+exports.updateUserProfile = function(profile, callback) {
+    if(profile.profileWidgets.length) {
+        _updateUserProfile(profile.profileWidgets, 0, callback);
+    } else {
+        callback();
+    }
+};
+
+var _updateUserProfile = function(profileWidgetArray, index, callback) {
+    var profileWidget = profileWidgetArray[index];
+    if(!profileWidget) {
+        callback();
+    } else {
+        if (typeof profileWidget.widget === 'object') {
+            profileWidget.widget = profileWidget.widget.id;
+        }
+
+        ProfileWidget.update(profileWidget.id, profileWidget).exec(function (err, result) {
+            if (err) {
+                callback(err);
+            } else {
+                _updateUserProfile(profileWidgetArray, index + 1, callback);
+            }
+        });
+    }
+};

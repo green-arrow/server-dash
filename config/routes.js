@@ -35,6 +35,16 @@ module.exports.routes = {
   '/': {
     controller: 'main',
     action: 'index'
+  },
+
+  '/login': {
+    controller: 'login',
+    action: 'index'
+  },
+
+  '/login/doLogin': {
+    controller: 'login',
+    action: 'doLogin'
   }
 
   /***************************************************************************

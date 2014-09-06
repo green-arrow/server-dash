@@ -12,7 +12,11 @@
         <div class="grid-sizer"></div>
         <div class="gutter-sizer"></div>
         {{#each profileWidget in profile.profileWidgets}}
-            {{render-widget profileWidget.widget.name title=profileWidget.widget.displayName data=widgetData}}
+            {{render-widget profileWidget.widget.name
+                            profileWidgetId=profileWidget.id
+                            title=profileWidget.widget.displayName
+                            sortOrder=profileWidget.sortOrder
+                            data=widgetData}}
         {{/each}}
     </div>
 {{/each}}

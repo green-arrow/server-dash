@@ -4,7 +4,13 @@
             active = -1,
             localOptions = $.extend(true, {
                 widgetSelector: '.item',
+                packeryIdAttr: 'data-packery-id',
+                widgetIdAttr: 'data-widget-id',
+                sortOrderAttr: 'data-sort-order',
+                zeroBasedSortOrder: false,
                 methods: {
+                    saveLayout: function(packeryId, items) {},
+                    beforeInitialLayout: onBeforeInitialLayout,
                     layoutUpdated: onLayoutUpdated,
                     draggabilly: {
                         dragStart: function (instance, event, pointer) {
@@ -15,6 +21,7 @@
                     }
                 },
                 packeryOptions: {
+                    isInitLayout: false,
                     containerStyle: {
                         position: 'absolute'
                     }
@@ -62,35 +69,37 @@
 
         /***** Dashboard Functions *****/
 
+        function onBeforeInitialLayout(packery) {
+            // create a hash of items by their sort order
+            var itemsBySortOrder = [];
+            for ( var i=0, len = packery.items.length; i < len; i++ ) {
+                var item = packery.items[i],
+                    sortOrder = item.element.getAttribute(localOptions.sortOrderAttr),
+                    index = localOptions.zeroBasedSortOrder ? sortOrder : sortOrder - 1;
+                itemsBySortOrder[ index ] = item;
+            }
+
+            packery.items = itemsBySortOrder;
+        }
+
         function onLayoutUpdated() {
             var self = this;
 
             clearTimeout(updateTimeout);
 
             updateTimeout = setTimeout($.proxy(function () {
-                var items = this.getPackeryItems(),
-                    postItems = [],
-                    url = '/Home2/api/DashboardProfile/' + this.element.data('user-dashboard-profile-id');
+                var packeryId = packeryArray[active].element.attr(localOptions.packeryIdAttr),
+                    items = this.getPackeryItems(),
+                    orderedItems = [];
 
                 for (var i = 0; i < items.length; i++) {
-                    postItems.push({
-                        UserProfileWidgetId: $(items[i]).data('user-profile-widget-id'),
-                        SortOrder: i + 1
+                    orderedItems.push({
+                        id: $(items[i]).attr(localOptions.widgetIdAttr),
+                        sortOrder: i + 1
                     });
                 }
 
-                $.ajax({
-                    type: 'PUT',
-                    url: url,
-                    data: { '': postItems },
-                    dataType: 'JSON',
-                    success: function (result) {
-                        console.log(result);
-                    },
-                    error: function (result) {
-                        console.log(result);
-                    }
-                });
+                localOptions.methods.saveLayout(packeryId, orderedItems);
             }, self), 2000);
         }
 

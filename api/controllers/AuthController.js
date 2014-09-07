@@ -11,7 +11,7 @@ module.exports = {
             req.session.destroy();
         }
 
-        res.ok();
+        res.redirect('/auth/login');
     },
 	login: function(req, res) {
         if(req.session.authenticated) {

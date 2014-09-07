@@ -37,13 +37,18 @@ module.exports.routes = {
     action: 'index'
   },
 
-  '/login': {
-    controller: 'login',
-    action: 'index'
+  '/auth/logout': {
+    controller: 'auth',
+    action: 'logout'
   },
 
-  '/login/doLogin': {
-    controller: 'login',
+  '/auth/login': {
+    controller: 'auth',
+    action: 'login'
+  },
+
+  '/auth/doLogin': {
+    controller: 'auth',
     action: 'doLogin'
   }
 

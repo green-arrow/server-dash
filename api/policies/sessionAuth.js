@@ -16,5 +16,5 @@ module.exports = function(req, res, next) {
   }
 
   // User is not allowed
-  res.redirect('/login');
+  res.redirect('/auth/login');
 };

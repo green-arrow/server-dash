@@ -6,8 +6,19 @@
  */
 
 module.exports = {
-	index: function(req, res) {
-        res.view({ layout: 'login-layout.ejs' });
+    logout: function(req, res) {
+        if(req.session.authenticated) {
+            req.session.destroy();
+        }
+
+        res.ok();
+    },
+	login: function(req, res) {
+        if(req.session.authenticated) {
+            res.redirect('/');
+        } else {
+            res.view({ layout: 'login-layout.ejs' });
+        }
     },
     doLogin: function(req, res) {
         var email = req.param('email'),

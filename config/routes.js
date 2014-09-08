@@ -47,9 +47,19 @@ module.exports.routes = {
     action: 'login'
   },
 
+  '/auth/update': {
+    controller: 'auth',
+    action: 'update'
+  },
+
   '/auth/doLogin': {
     controller: 'auth',
     action: 'doLogin'
+  },
+
+  '/auth/doUpdate': {
+    controller: 'auth',
+    action: 'doUpdate'
   }
 
   /***************************************************************************

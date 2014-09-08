@@ -22,6 +22,9 @@ module.exports = {
         type: 'string',
         required: true
     },
+    firstLogin: {
+        type: 'boolean'
+    },
     profiles: {
         collection: 'profile',
         via: 'user'
@@ -30,6 +33,7 @@ module.exports = {
         var obj = this.toObject();
         delete obj.password;
         delete obj.salt;
+        delete obj.firstLogin;
         delete obj.createdAt;
         delete obj.updatedAt;
         return obj;

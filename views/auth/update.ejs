@@ -1,0 +1,50 @@
+<header>
+    <h1>server-dash</h1>
+</header>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <h3>First-time Login</h3>
+            <p>Please update your e-mail address and password below.</p>
+            <div id="error" class="alert alert-danger hidden" role="alert"></div>
+            <form role="form" method="post" action="doUpdate">
+                <div class="form-group">
+                    <label for="newEmail">New Email address</label>
+                    <input type="email" class="form-control" id="newEmail" name="newEmail" placeholder="Enter email">
+                </div>
+                <div class="form-group">
+                    <label for="newPassword">New Password</label>
+                    <input type="password" class="form-control" id="newPassword" name="newPassword" placeholder="Password">
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm Password">
+                </div>
+                <button id="updateButton" class="btn btn-primary">Update</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    (function() {
+        $('#updateButton').on('click', function(e) {
+            var newPassword = $('#newPassword').val(),
+                confirmPassword = $('#confirmPassword').val();
+
+            e.preventDefault();
+
+            if(newPassword !== confirmPassword) {
+                $('#error')
+                    .html('<strong>Passwords do not match!</strong> Please update your password and try again.')
+                    .removeClass('hidden');
+            } else {
+                $('#error').addClass('hidden');
+                $('form').submit();
+            }
+
+            return false;
+        });
+    })();
+</script>

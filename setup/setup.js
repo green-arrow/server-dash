@@ -70,7 +70,7 @@ module.exports.generateDefaultUser = function(callback) {
                     sails.log.error('Failed to generate password hash with bcrypt.\n', err);
                     process.exit(1);
                 } else {
-                    db.user.save({email: email, password: hash, salt: salt, firstLogin: true}, function (err, saved) {
+                    db.user.save({email: email, password: hash, firstLogin: true}, function (err, saved) {
                         if (err || !saved) {
                             sails.log.error('Failed to create default user.\n', err || '');
                             process.exit(1);

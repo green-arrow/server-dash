@@ -9,12 +9,13 @@
  */
 module.exports = function(req, res, next) {
 
-  // User is allowed, proceed to the next policy, 
-  // or if this is the last policy, the controller
-  if (req.session.authenticated) {
-    return next();
-  }
-
-  // User is not allowed
-  res.redirect('/auth/login');
+    // User is allowed, proceed to the next policy,
+    // or if this is the last policy, the controller
+    if (req.session.authenticated) {
+        return next();
+    } else if (req.session.user) {
+        res.forbidden({ firstLogin: true });
+    } else {
+        res.forbidden();
+    }
 };

@@ -34,7 +34,6 @@
 
     <!--STYLES-->
     <link rel="stylesheet" href="/styles/importer.css">
-    <link rel="stylesheet" href="/styles/login.css">
     <!--STYLES END-->
   </head>
 
@@ -73,23 +72,45 @@
     <script src="/js/dependencies/packery.pkgd.js"></script>
     <script src="/js/dependencies/draggabilly.js"></script>
     <script src="/js/ember-app/app.js"></script>
+    <script src="/js/ember-app/controllers/base-controller.js"></script>
+    <script src="/js/ember-app/routes/authorized-base-route.js"></script>
     <script src="/js/dashboard.js"></script>
     <script src="/js/dashboard.packery.js"></script>
-    <script src="/js/ember-app/adapters/application.js"></script>
-    <script src="/js/ember-app/controllers/application.js"></script>
-    <script src="/js/ember-app/controllers/index.js"></script>
+    <script src="/js/ember-app/adapters/application-adapter.js"></script>
+    <script src="/js/ember-app/controllers/account-controller.js"></script>
+    <script src="/js/ember-app/controllers/account-setup-controller.js"></script>
+    <script src="/js/ember-app/controllers/application-controller.js"></script>
+    <script src="/js/ember-app/controllers/index-controller.js"></script>
+    <script src="/js/ember-app/controllers/login-controller.js"></script>
     <script src="/js/ember-app/helpers/render-widget.js"></script>
-    <script src="/js/ember-app/models/profile-widget.js"></script>
-    <script src="/js/ember-app/models/profile.js"></script>
-    <script src="/js/ember-app/models/widget.js"></script>
-    <script src="/js/ember-app/models/widgets/widget-general.js"></script>
+    <script src="/js/ember-app/models/profile-model.js"></script>
+    <script src="/js/ember-app/models/profile-widget-model.js"></script>
+    <script src="/js/ember-app/models/user-model.js"></script>
+    <script src="/js/ember-app/models/widget-model.js"></script>
+    <script src="/js/ember-app/models/widgets/widget-general-model.js"></script>
     <script src="/js/ember-app/router.js"></script>
-    <script src="/js/ember-app/routes/index.js"></script>
-    <script src="/js/ember-app/serializers/profile-widget.js"></script>
-    <script src="/js/ember-app/serializers/profile.js"></script>
+    <script src="/js/ember-app/routes/account-route.js"></script>
+    <script src="/js/ember-app/routes/account-setup-route.js"></script>
+    <script src="/js/ember-app/routes/index-route.js"></script>
+    <script src="/js/ember-app/routes/login-route.js"></script>
+    <script src="/js/ember-app/serializers/profile-serializer.js"></script>
+    <script src="/js/ember-app/serializers/profile-widget-serializer.js"></script>
     <script src="/js/ember-app/views/index.js"></script>
     <script src="/js/jquery.smartresize.js"></script>
     <!--SCRIPTS END-->
+
+    <script type="text/javascript">
+        //(function() {
+        var userId = '';
+        <% if(userId) { %>
+        userId = '<%= userId %>';
+        <% } %>
+
+        // Setup Ember.
+        ServerDash.userId = userId;
+        ServerDash.firstLogin = <%= firstLogin %>;
+        //})();
+    </script>
 
     <!--
           Client-side Templates

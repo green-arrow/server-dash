@@ -39,6 +39,8 @@ var jsFilesToInject = [
 
   // Bring in Ember application before all other Ember files
   'js/ember-app/app.js',
+  'js/ember-app/controllers/base-controller.js',
+  'js/ember-app/routes/authorized-base-route.js',
 
   // All of the rest of your client-side js files
   // will be injected here in no particular order.

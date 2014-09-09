@@ -37,19 +37,24 @@ module.exports.routes = {
     action: 'index'
   },
 
+  '/account': {
+    controller: 'main',
+    action: 'index'
+  },
+
+  '/login': {
+    controller: 'main',
+    action: 'index'
+  },
+
+  '/accountSetup': {
+    controller: 'main',
+    action: 'index'
+  },
+
   '/auth/logout': {
     controller: 'auth',
     action: 'logout'
-  },
-
-  '/auth/login': {
-    controller: 'auth',
-    action: 'login'
-  },
-
-  '/auth/update': {
-    controller: 'auth',
-    action: 'update'
   },
 
   '/auth/doLogin': {

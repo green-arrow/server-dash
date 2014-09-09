@@ -18,10 +18,6 @@ module.exports = {
         type: 'string',
         required: true
     },
-    salt: {
-        type: 'string',
-        required: true
-    },
     firstLogin: {
         type: 'boolean'
     },
@@ -32,8 +28,6 @@ module.exports = {
     toJSON: function() {
         var obj = this.toObject();
         delete obj.password;
-        delete obj.salt;
-        delete obj.firstLogin;
         delete obj.createdAt;
         delete obj.updatedAt;
         return obj;

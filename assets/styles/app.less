@@ -40,6 +40,16 @@ header {
   color: #fff;
   background-color: #428bca;
 
+  a {
+    color: #fff;
+    text-decoration: none;
+
+    &:hover {
+      color: #fff;
+      text-decoration: none;
+    }
+  }
+
   h1 {
     line-height: 35px;
     font-size: 1.7em;
@@ -49,6 +59,8 @@ header {
   .fa {
     line-height: 35px;
     cursor: pointer;
+    color: #fff;
+    margin-left: 20px;
   }
 }
 
@@ -83,4 +95,23 @@ header {
 
 .container {
   padding: 20px;
+
+  form hr {
+    border-color: #eaeaea;
+  }
+}
+
+/* Alerts */
+
+.alert-header {
+  font-weight: bold;
+}
+
+.alert-message {
+  margin-top: 10px;
+}
+
+.alert-list {
+  margin-top: 10px;
+  padding-left: 15px;
 }

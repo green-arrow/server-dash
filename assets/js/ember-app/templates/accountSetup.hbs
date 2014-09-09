@@ -1,0 +1,24 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <h3>First-time Login</h3>
+            <p>Please update your e-mail address and password.</p>
+
+            {{error-alert hasError=hasError header=errorHeader message=errorMessage errorList=errorList}}
+
+            <div class="form-group">
+                <label for="email">Email address</label>
+                {{input type="email" class="form-control" placeholder="E-mail" value=newEmail}}
+            </div>
+            <div class="form-group">
+                <label for="password">New Password</label>
+                {{input type="password" class="form-control" placeholder="New Password" value=newPassword}}
+            </div>
+            <div class="form-group">
+                <label for="password">Confirm Password</label>
+                {{input type="password" class="form-control" placeholder="Confirm Password" value=confirmNewPassword}}
+            </div>
+            <button class="btn btn-primary" {{action 'update'}}>Update Account</button>
+        </div>
+    </div>
+</div>

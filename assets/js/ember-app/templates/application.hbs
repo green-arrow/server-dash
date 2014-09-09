@@ -1,14 +1,16 @@
 <header>
     <div class="container-fluid">
         <div class="col-md-3">
-            <h1>server-dash</h1>
+            {{#link-to 'index'}}<h1>server-dash</h1>{{/link-to}}
         </div>
         <div class="col-md-9 text-right">
-            <i class="fa fa-2x fa-power-off" {{action 'logout'}}></i>
+            {{#if user}}
+                <span>Welcome, {{user.email}}</span>
+                {{#link-to 'account'}}<i class="fa fa-2x fa-cog" title="Account Settings"></i>{{/link-to}}
+                <i class="fa fa-2x fa-power-off" title="Logout" {{action 'logout'}}></i>
+            {{/if}}
         </div>
     </div>
 </header>
 
-<div class="container">
-    {{outlet}}
-</div>
+{{outlet}}

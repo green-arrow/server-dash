@@ -73,3 +73,18 @@ run a setup script that auto-generates necessary database records.
 ```
 node app.js
 ```
+
+If this is your first time running the application, the default login credentials are:
+
+Email: admin@localhost
+Password: Adm!n
+
+These credentials will be displayed in the console window after starting the application for the first time.
+
+If you ever reach a point where you would like to completely reset the application and database, use the following command:
+
+```
+node app.js --force-setup
+```
+
+This will force the MongoDB database to be dropped and the setup script will run again.

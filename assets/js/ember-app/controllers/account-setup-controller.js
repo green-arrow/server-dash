@@ -44,7 +44,7 @@ ServerDash.AccountSetupController = ServerDash.BaseController.extend({
                         that.transitionToRoute('index');
                     },
                     error: function(error) {
-                        console.error(error);
+                        that.handleAjaxError(result);
                     }
                 });
             }

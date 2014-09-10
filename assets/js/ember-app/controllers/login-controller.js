@@ -20,6 +20,7 @@ ServerDash.LoginController = ServerDash.BaseController.extend({
 
                     that.set('email', '');
                     that.set('password', '');
+                    that.set('hasError', false);
 
                     if(result.firstLogin) {
                         that.transitionToRoute('accountSetup');

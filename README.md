@@ -77,6 +77,7 @@ node app.js
 If this is your first time running the application, the default login credentials are:
 
 Email: admin@localhost
+
 Password: Adm!n
 
 These credentials will be displayed in the console window after starting the application for the first time.

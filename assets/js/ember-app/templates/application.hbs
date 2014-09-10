@@ -1,13 +1,20 @@
 <header>
     <div class="container-fluid">
-        <div class="col-md-3">
-            {{#link-to 'index'}}<h1>server-dash</h1>{{/link-to}}
+        <div class="row">
+            <div class="col-xs-7">
+                {{#link-to 'index'}}<h1>server-dash</h1>{{/link-to}}
+            </div>
+            <div class="col-xs-5 text-right">
+                {{#if user}}
+                    <span class="hidden-xs">Welcome, {{user.email}}</span>
+                    {{#link-to 'account'}}<i class="fa fa-2x fa-cog" title="Account Settings"></i>{{/link-to}}
+                    <i class="fa fa-2x fa-power-off" title="Logout" {{action 'logout'}}></i>
+                {{/if}}
+            </div>
         </div>
-        <div class="col-md-9 text-right">
+        <div class="visible-xs mobile-welcome">
             {{#if user}}
-                <span>Welcome, {{user.email}}</span>
-                {{#link-to 'account'}}<i class="fa fa-2x fa-cog" title="Account Settings"></i>{{/link-to}}
-                <i class="fa fa-2x fa-power-off" title="Logout" {{action 'logout'}}></i>
+                Welcome, {{user.email}}
             {{/if}}
         </div>
     </div>

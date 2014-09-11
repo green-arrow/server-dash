@@ -39,6 +39,7 @@ ServerDash.IndexView = Ember.View.extend({
 
         var onProfileChange = function (e) {
             var packeryElements = Ember.$('.packery'),
+                controller = that.get('controller'),
                 index, profileId;
 
             if(e) {
@@ -58,6 +59,7 @@ ServerDash.IndexView = Ember.View.extend({
                 // Update icon images
                 Ember.$('.sidebar .profile-icon[data-target]').removeClass('active');
                 Ember.$('.sidebar .profile-icon[data-target="' + profileId + '"]').addClass('active');
+                controller.set('mobileSidebarVisible', false);
             }
         };
 

@@ -21,14 +21,14 @@ html, body {
   background-color: #000;
   z-index: -1;
   .transition(all 0.7s ease-in-out);
-}
 
-.modal-backdrop.in {
-  opacity: 0.6;
-  z-index: 9000;
+  &.in {
+    opacity: 0.6;
+    z-index: 10;
 
-  &.dark {
-    opacity: 0.75;
+    &.dark {
+      opacity: 0.75;
+    }
   }
 }
 
@@ -60,7 +60,7 @@ header {
     line-height: 35px;
     cursor: pointer;
     color: #fff;
-    margin-left: 20px;
+    margin-left: 15px;
   }
 }
 
@@ -92,6 +92,10 @@ header {
 }
 
 /* Main Content */
+
+.packery {
+  left: 100px;
+}
 
 .container {
   padding: 20px;

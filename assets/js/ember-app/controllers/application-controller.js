@@ -1,6 +1,7 @@
 ServerDash.ApplicationController = Ember.Controller.extend({
     userIdBinding: 'ServerDash.userId',
     firstLoginBinding: 'ServerDash.firstLogin',
+    mobileSidebarVisible: false,
     user: function() {
         var val;
 
@@ -25,6 +26,10 @@ ServerDash.ApplicationController = Ember.Controller.extend({
                     console.error('Something bad happened: ' + result);
                 }
             });
+        },
+        toggleSidebar: function() {
+            var current = this.get('mobileSidebarVisible');
+            this.set('mobileSidebarVisible', !current);
         }
     }
 });

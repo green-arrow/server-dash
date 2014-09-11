@@ -1,18 +1,19 @@
 <header>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-xs-7">
+            <div class="col-xs-6 xs-p-l10">
                 {{#link-to 'index'}}<h1>server-dash</h1>{{/link-to}}
             </div>
-            <div class="col-xs-5 text-right">
+            <div class="col-xs-6 text-right">
                 {{#if user}}
                     <span class="hidden-xs">Welcome, {{user.email}}</span>
+                    <span class="visible-xs-inline"><i class="fa fa-2x fa-bars" {{action 'toggleSidebar'}}></i></span>
                     {{#link-to 'account'}}<i class="fa fa-2x fa-cog" title="Account Settings"></i>{{/link-to}}
                     <i class="fa fa-2x fa-power-off" title="Logout" {{action 'logout'}}></i>
                 {{/if}}
             </div>
         </div>
-        <div class="visible-xs mobile-welcome">
+        <div class="row visible-xs mobile-welcome xs-p-l10">
             {{#if user}}
                 Welcome, {{user.email}}
             {{/if}}

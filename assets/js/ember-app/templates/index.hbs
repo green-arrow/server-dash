@@ -1,4 +1,4 @@
-<div class="sidebar">
+<div class="sidebar" {{bind-attr class=":sidebar mobileSidebarVisible:in"}}>
     {{#each profile in model}}
         <div class="profile-icon" {{bind-attr data-target="profile.id"}}>
             <i {{bind-attr class=":fa :fa-2x profile.icon"}}></i>

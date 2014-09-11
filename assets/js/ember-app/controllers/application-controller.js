@@ -2,6 +2,10 @@ ServerDash.ApplicationController = Ember.Controller.extend({
     userIdBinding: 'ServerDash.userId',
     firstLoginBinding: 'ServerDash.firstLogin',
     mobileSidebarVisible: false,
+    onIndexRoute: false,
+    updateCurrentPath: function() {
+        this.set('onIndexRoute', this.get('currentPath') === 'index');
+    }.observes('currentPath'),
     user: function() {
         var val;
 

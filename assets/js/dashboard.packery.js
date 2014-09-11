@@ -24,6 +24,10 @@
 
                                 $this.height(height);
                             });
+
+                            setTimeout(function() {
+                                packery.layout();
+                            }, 500);
                         }
                     },
                     packery: {

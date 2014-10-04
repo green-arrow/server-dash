@@ -106,6 +106,8 @@
 
                 if (hidden) {
                     container.hide();
+                } else {
+                    container.show();
                 }
 
                 return this;

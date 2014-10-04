@@ -1,0 +1,13 @@
+<div id="add-widget" {{bind-attr class=":packery :no-left :add-widget :fade isShowing:in"}}>
+    <div class="grid-sizer"></div>
+    <div class="gutter-sizer"></div>
+    {{#each widget in model}}
+        {{render-widget widget.name
+        title=widget.displayName
+        data=widgetData}}
+    {{/each}}
+</div>
+<div id="add-widget-button-bar" {{bind-attr class=":add-widget-button-bar :fade isShowing:in"}}>
+    <button class="btn btn-default" {{action 'cancel'}}>Cancel</button>
+</div>
+<div {{bind-attr class=":modal-backdrop :fade isShowing:in isShowing:dark"}}></div>

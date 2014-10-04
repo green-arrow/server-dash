@@ -52,6 +52,11 @@ module.exports.routes = {
     action: 'index'
   },
 
+  '/widgets/add': {
+    controller: 'main',
+    action: 'index'
+  },
+
   '/auth/logout': {
     controller: 'auth',
     action: 'logout'

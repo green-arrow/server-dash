@@ -1,4 +1,13 @@
 ﻿(function () {
+    if (!String.format) {
+        String.format = function (format) {
+            var args = Array.prototype.slice.call(arguments, 1);
+            return format.replace(/{(\d+)}/g, function (match, number) {
+                return typeof args[number] != 'undefined' ? args[number] : match;
+            });
+        };
+    }
+
     window.Dashboard = function (selector, options) {
         var packeryArray = [],
             active = -1,
@@ -48,22 +57,22 @@
                 {
                     Name: "Sample Widget 1",
                     Description: "This is a description of the widget. Here is where we will describe what data this widget provides.",
-                    Image: "/Home/Images/widgets/Tasks.png"
+                    Image: "/images/widget-error.png"
                 },
                 {
                     Name: "Sample Widget 2",
                     Description: "This is a description of the widget. Here is where we will describe what data this widget provides.",
-                    Image: "/Home/Images/widgets/Tasks.png"
+                    Image: "/images/widget-error.png"
                 },
                 {
                     Name: "Sample Widget 3",
                     Description: "This is a description of the widget. Here is where we will describe what data this widget provides.",
-                    Image: "/Home/Images/widgets/Tasks.png"
+                    Image: "/images/widget-error.png"
                 },
                 {
                     Name: "Sample Widget 4",
                     Description: "This is a description of the widget. Here is where we will describe what data this widget provides.",
-                    Image: "/Home/Images/widgets/Tasks.png"
+                    Image: "/images/widget-error.png"
                 }
             ];
 
@@ -109,18 +118,18 @@
             var container = $(addWidgetTemplate),
                 buttonBar = $(addWidgetButtonTemplate),
                 body = $('body'),
+                backdrop = $('<div id="backdrop" class="modal-backdrop in dark"></div>'),
                 contents = '';
 
-            for (var index in testAddWidgets) {
-                contents += String.format(sampleWidgetTemplate, testAddWidgets[index].Name, testAddWidgets[index].Description, testAddWidgets[index].Image);
-            }
+            testAddWidgets.forEach(function(item, index) {
+                contents += String.format(sampleWidgetTemplate, item.Name, item.Description, item.Image);
+            });
 
             container.append(contents);
 
-            $('#backdrop').addClass('in dark');
-
             body.append(container);
             body.append(buttonBar);
+            body.append(backdrop);
 
             packery = container.packery({
                 rowHeight: 300,

@@ -1,10 +1,11 @@
 ServerDash.IndexView = Ember.View.extend({
     didInsertElement: function(){
-        var that = this;
+        var that = this,
+            controller = that.get('controller');
 
         that._super();
 
-        ServerDash.Dashboard = Dashboard('.packery', {
+        ServerDash.Dashboard = Dashboard('#main .packery', {
             packeryIdAttr: 'data-profile-id',
             widgetIdAttr: 'data-profile-widget-id',
             methods: {
@@ -65,11 +66,6 @@ ServerDash.IndexView = Ember.View.extend({
 
         // Add next action to animate button.
         Ember.$('.sidebar .profile-icon[data-target]').on('click', onProfileChange);
-
-        // Add widget screen
-        Ember.$('.sidebar .profile-icon.add').on('click', function () {
-            ServerDash.Dashboard.showAddWidget();
-        });
 
         // Show the first dashboard.
         setTimeout(onProfileChange, 10);

@@ -5,8 +5,14 @@
             {{profile.name}}
         </div>
     {{/each}}
+
+    <div class="profile-icon" {{action 'showAddWidget'}}>
+        <i class="fa fa-2x fa-plus"></i>
+        Add Widget
+    </div>
 </div>
 
+<div id="main">
 {{#each profile in model}}
     <div class="packery" {{bind-attr data-profile-id="profile.id"}}>
         <div class="grid-sizer"></div>
@@ -20,3 +26,6 @@
         {{/each}}
     </div>
 {{/each}}
+</div>
+
+{{outlet}}

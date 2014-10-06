@@ -38,36 +38,29 @@ ServerDash.IndexView = Ember.View.extend({
 
         ServerDash.Dashboard.initialize();
 
-        var onProfileChange = function (e) {
-            var packeryElements = Ember.$('.packery'),
-                controller = that.get('controller'),
-                index, profileId;
+        // Show the first dashboard.
+        setTimeout(controller.send('selectProfile'), 10);
+    },
+    updateActiveProfile: function () {
+        var that = this,
+            packeryElements = Ember.$('.packery'),
+            profileId = that.get('controller.activeProfileId'),
+            index;
 
-            if(e) {
-                profileId = Ember.$(e.target).closest('.profile-icon').data('target');
-            } else {
-                profileId = Ember.$('.sidebar .profile-icon[data-target]:first').data('target');
-            }
-
-            for(var i = 0, len = packeryElements.length; i < len; i++) {
+        if(profileId) {
+            for (var i = 0, len = packeryElements.length; i < len; i++) {
                 if (Ember.$(packeryElements[i]).data('profile-id') === profileId) {
                     index = i;
                     break;
                 }
             }
 
-            if(ServerDash.Dashboard.updateActiveView(index)) {
+            if (ServerDash.Dashboard.updateActiveView(index)) {
                 // Update icon images
                 Ember.$('.sidebar .profile-icon[data-target]').removeClass('active');
                 Ember.$('.sidebar .profile-icon[data-target="' + profileId + '"]').addClass('active');
-                controller.set('mobileSidebarVisible', false);
+                that.set('controller.mobileSidebarVisible', false);
             }
-        };
-
-        // Add next action to animate button.
-        Ember.$('.sidebar .profile-icon[data-target]').on('click', onProfileChange);
-
-        // Show the first dashboard.
-        setTimeout(onProfileChange, 10);
-    }
+        }
+    }.observes('controller.activeProfileId')
 });

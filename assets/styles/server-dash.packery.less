@@ -88,7 +88,7 @@
     }
   }
 
-  &.is-dragging, .is-positioning-post-drag {
+  &.active, &.is-dragging, .is-positioning-post-drag {
     z-index: 1;
   }
 
@@ -107,6 +107,27 @@
 
   .handle {
     cursor: default;
+  }
+
+  .button-bar {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 10px;
+
+    .fa {
+      font-size: 1.5em;
+      color: #9D9FA2;
+      cursor: pointer;
+
+      &.show {
+        display: inline-block !important; // Override Bootstrap's 'show' class
+      }
+
+      &.fa-bars, &.fa-remove {
+        margin-left: 10px;
+      }
+    }
   }
 }
 
@@ -131,17 +152,5 @@
         background-color: white;
         max-height: 240px;
         margin-top: 5px;
-    }
-
-    .button-bar {
-        margin-top: 10px;
-
-        .btn {
-            margin-left: 5px;
-
-            &.btn-primary {
-                margin-left: 0;
-            }
-        }
     }
 }

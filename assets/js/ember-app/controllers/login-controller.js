@@ -1,4 +1,6 @@
 ServerDash.LoginController = ServerDash.BaseController.extend({
+    needs: 'application',
+    applicationController: 'controllers.application',
     email: '',
     password: '',
     errorHeader: 'Unable to login!',
@@ -15,8 +17,8 @@ ServerDash.LoginController = ServerDash.BaseController.extend({
                     password: this.get('password')
                 },
                 success: function(result) {
-                    that.controllerFor('application').set('userId', result.userId);
-                    that.controllerFor('application').set('firstLogin', result.firstLogin);
+                    that.applicationController.set('userId', result.userId);
+                    that.applicationController.set('firstLogin', result.firstLogin);
 
                     that.set('email', '');
                     that.set('password', '');

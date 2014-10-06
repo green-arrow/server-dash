@@ -1,6 +1,6 @@
 <div class="sidebar" {{bind-attr class=":sidebar mobileSidebarVisible:in"}}>
     {{#each profile in model}}
-        <div class="profile-icon" {{bind-attr data-target="profile.id"}}>
+        <div class="profile-icon" {{action "selectProfile" profile}} {{bind-attr data-target="profile.id"}}>
             <i {{bind-attr class=":fa :fa-2x profile.icon"}}></i>
             {{profile.name}}
         </div>
@@ -18,11 +18,13 @@
         <div class="grid-sizer"></div>
         <div class="gutter-sizer"></div>
         {{#each profileWidget in profile.profileWidgets}}
-            {{render-widget profileWidget.widget.name
+            {{#render-widget profileWidget.widget.name
+                            name=profileWidget.widget.name
                             profileWidgetId=profileWidget.id
                             title=profileWidget.widget.displayName
                             sortOrder=profileWidget.sortOrder
                             data=widgetData}}
+            {{/render-widget}}
         {{/each}}
     </div>
 {{/each}}

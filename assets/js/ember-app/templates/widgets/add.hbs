@@ -2,9 +2,20 @@
     <div class="grid-sizer"></div>
     <div class="gutter-sizer"></div>
     {{#each widget in model}}
-        {{render-widget widget.name
-        title=widget.displayName
-        data=widgetData}}
+        {{#render-widget widget.name
+                         name=widget.name
+                         title=widget.displayName
+                         data=widgetData}}
+            <div class="button-bar">
+                <i class="fa fa-plus" title="Add Widget" {{action "addWidget" widget target=view}}></i>
+                <i title="Show Details" {{bind-attr class=":fa :fa-bars showingDetails:hide:show"}}
+                   {{action "showDetails" widget target=view}}>
+                </i>
+                <i title="Hide Details" {{bind-attr class=":fa :fa-remove showingDetails:show:hide"}}
+                    {{action "hideDetails" widget target=view}}>
+                </i>
+            </div>
+        {{/render-widget}}
     {{/each}}
 </div>
 <div id="add-widget-button-bar" {{bind-attr class=":add-widget-button-bar :fade isShowing:in"}}>

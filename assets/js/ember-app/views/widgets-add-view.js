@@ -16,6 +16,34 @@ ServerDash.WidgetsAddView = Ember.View.extend({
 
         controller.set('isShowing', true);
     },
+    actions: {
+        addWidget: function(widget) {
+            console.log('add widget');
+        },
+        showDetails: function(context) {
+            var that = this,
+                controller = that.get('controller'),
+                widget = Ember.$('#add-widget .item[data-name="' + context.get('name') + '"]');
+
+            controller.set('showingDetails', true);
+            //widget.find('button[data-action="add"]').addClass('btn-primary');
+            //widget.find('.button-bar').append('<button class="btn" data-action="cancel">Cancel</button>');
+            //widget.find('button[data-action="cancel"]').on('click', onCancelSelect);
+
+            that.centerWidget(widget);
+            that.hideSiblings(widget);
+        },
+        hideDetails: function(context) {
+            var that = this,
+                controller = that.get('controller'),
+                widget = Ember.$('#add-widget .item[data-name="' + context.get('name') + '"]');
+
+            controller.set('showingDetails', false);
+
+            that.resetWidget(widget);
+            that.showSiblings(widget);
+        }
+    },
     displayAddWidgetUI: function() {
         var addWidgetContainer = Ember.$('#add-widget'),
             buttonBar = Ember.$('#add-widget-button-bar'),
@@ -28,77 +56,34 @@ ServerDash.WidgetsAddView = Ember.View.extend({
         return addWidgetContainer;
     },
 
-    onCancelAddWidget: function() {
-        var container = $('.add-widget'),
-            buttonBar = $('.add-widget-button-bar');
-
-        container.removeClass('in');
-        buttonBar.removeClass('in');
-        $('#backdrop').removeClass('in dark');
-
-        setTimeout(function () {
-            container.remove();
-            buttonBar.remove();
-        }, 700);
-    },
-    onSelectWidget: function() {
-        var button = $(this),
-            item = button.parents('.item');
-
-        button.hide();
-
-        item.find('button[data-action="add"]').addClass('btn-primary');
-        item.find('.button-bar').append('<button class="btn" data-action="cancel">Cancel</button>');
-        item.find('button[data-action="cancel"]').on('click', onCancelSelect);
-
-        centerWidget(item);
-        hideSiblings(item);
-
-        setTimeout(function () {
-            item.find('.content').slideDown();
-        }, 400);
-
-    },
-    onCancelSelect: function() {
-        var button = $(this),
-            item = button.parents('.item');
-
-        item.find('.content').slideUp();
-
-        setTimeout(function () {
-            button.remove();
-            item.find('button[data-action="select"]').show();
-            item.find('button[data-action="add"]').removeClass('btn-primary');
-
-            resetWidget(item);
-            showSiblings(item);
-        }, 400);
-    },
-    onAddWidget: function() {
-
-    },
+    /******* Utility Functions *******/
     hideSiblings: function(widget) {
-        widget.siblings().css({
+        var that = this;
+
+        widget.parent().siblings().find('.item').css({
             '-webkit-transition': 'opacity 0.4s',
             'transition': 'opacity 0.4s',
             'opacity': '0',
             'z-index': '0'
         });
 
-        removeTransition(widget.siblings(), 400);
+        that.removeTransition(widget.siblings(), 400);
     },
     showSiblings: function(widget) {
-        widget.siblings().css({
+        var that = this;
+
+        widget.parent().siblings().find('.item').css({
             '-webkit-transition': 'opacity 0.4s',
             'transition': 'opacity 0.4s',
             'opacity': '1',
             'z-index': '1'
         });
 
-        removeTransition(widget.siblings(), 400);
+        that.removeTransition(widget.siblings(), 400);
     },
     centerWidget: function(widget) {
-        var top = parseFloat(widget.css('top')),
+        var that = this,
+            top = parseFloat(widget.css('top')),
             left = parseFloat(widget.css('left')),
             widgetWidth = widget.width(),
             widgetHeight = widget.height(),
@@ -116,6 +101,7 @@ ServerDash.WidgetsAddView = Ember.View.extend({
             offsetY: top - posY
         });
 
+        widget.addClass('active');
         widget.css({
             '-webkit-transition': 'transform 0.4s',
             'transition': 'transform 0.4s',
@@ -128,11 +114,15 @@ ServerDash.WidgetsAddView = Ember.View.extend({
                 'top': posY + 'px',
                 'left': posX + 'px'
             });
-            removeTransition(widget, 0);
+
+            that.removeTransition(widget, 0);
         }, 400);
     },
     resetWidget: function(widget) {
-        var orig = widget.data('orig');
+        var that = this,
+            orig = widget.data('orig');
+
+        widget.removeClass('active');
 
         widget.css({
             '-webkit-transition': 'transform 0.4s',
@@ -146,7 +136,24 @@ ServerDash.WidgetsAddView = Ember.View.extend({
                 'top': orig.top + 'px',
                 'left': orig.left + 'px'
             });
-            removeTransition(widget, 0);
+            that.removeTransition(widget, 0);
         }, 400);
+    },
+    removeTransition: function(elements, delay) {
+        var that = this;
+
+        if (delay > 0) {
+            setTimeout(function () {
+                that.forceRemoveTransition(elements);
+            }, delay);
+        } else {
+            that.forceRemoveTransition(elements);
+        }
+    },
+    forceRemoveTransition: function (elements) {
+        elements.css({
+            '-webkit-transition': '',
+            'transition': ''
+        });
     }
 });

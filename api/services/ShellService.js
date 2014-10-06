@@ -17,8 +17,9 @@ exports.getUptime = function() {
         uptimeArray = uptimeString.split('up')[1].split(/\d+ user/)[0].split(','),
         uptimeDays = uptimeArray[0].indexOf('day') > -1 ? parseInt(uptimeArray[0].replace(/day(.*)/, '').trim(), 10) : 0,
         uptimeHoursMinutes = (uptimeDays ? uptimeArray[1] : uptimeArray[0]).split(':'),
-        uptimeHours = parseInt(uptimeHoursMinutes[0], 10),
-        uptimeMinutes = parseInt(uptimeHoursMinutes[1], 10);
+        uptimeHours = uptimeHoursMinutes.length === 1 ? 0 : parseInt(uptimeHoursMinutes[0], 10),
+        uptimeMinutes = uptimeHoursMinutes.length === 1 ? parseInt(uptimeHoursMinutes[0].replace('mins', ''), 10)
+                        : parseInt(uptimeHoursMinutes[1], 10);
 
     return uptimeDays + ' days ' + uptimeHours + ' hours ' + uptimeMinutes + ' minutes';
 };

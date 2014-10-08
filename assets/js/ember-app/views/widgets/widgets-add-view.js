@@ -95,29 +95,12 @@ ServerDash.WidgetsAddView = Ember.View.extend({
             offsetX = posX - left,
             offsetY = posY - top;
 
-        widget.data('orig', {
-            top: top,
-            left: left,
-            offsetX: left - posX,
-            offsetY: top - posY
-        });
-
         widget.addClass('active');
         widget.css({
             '-webkit-transition': 'transform 0.4s',
             'transition': 'transform 0.4s',
             'transform': 'translate3d(' + offsetX + 'px, ' + offsetY + 'px, 0)'
         });
-
-        setTimeout(function () {
-            widget.css({
-                'transform': '',
-                'top': posY + 'px',
-                'left': posX + 'px'
-            });
-
-            that.removeTransition(widget, 0);
-        }, 400);
     },
     resetWidget: function(widget) {
         var that = this,
@@ -126,17 +109,10 @@ ServerDash.WidgetsAddView = Ember.View.extend({
         widget.removeClass('active');
 
         widget.css({
-            '-webkit-transition': 'transform 0.4s',
-            'transition': 'transform 0.4s',
-            'transform': 'translate3d(' + orig.offsetX + 'px, ' + orig.offsetY + 'px, 0)'
+            'transform': ''
         });
 
         setTimeout(function () {
-            widget.css({
-                'transform': '',
-                'top': orig.top + 'px',
-                'left': orig.left + 'px'
-            });
             that.removeTransition(widget, 0);
         }, 400);
     },

@@ -32,29 +32,11 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
-  '/': {
+  '/*': {
     controller: 'main',
-    action: 'index'
-  },
-
-  '/account': {
-    controller: 'main',
-    action: 'index'
-  },
-
-  '/login': {
-    controller: 'main',
-    action: 'index'
-  },
-
-  '/accountSetup': {
-    controller: 'main',
-    action: 'index'
-  },
-
-  '/widgets/add': {
-    controller: 'main',
-    action: 'index'
+    action: 'index',
+    skipAssets: true,
+    skipRegex: /^\/api\/|\/auth\/.*$/
   },
 
   '/auth/logout': {

@@ -1,0 +1,17 @@
+<div id="main">
+    <div class="packery" {{bind-attr data-profile-id="model.id"}}>
+        <div class="grid-sizer"></div>
+        <div class="gutter-sizer"></div>
+        {{#each profileWidget in model.profileWidgets}}
+            {{#render-widget profileWidget.widget.name
+                            name=profileWidget.widget.name
+                            profileWidgetId=profileWidget.id
+                            title=profileWidget.widget.displayName
+                            sortOrder=profileWidget.sortOrder
+                            data=widgetData}}
+            {{/render-widget}}
+        {{/each}}
+    </div>
+</div>
+
+{{outlet}}

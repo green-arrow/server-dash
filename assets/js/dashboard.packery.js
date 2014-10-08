@@ -94,6 +94,11 @@
         
         return {
             initialize: function(hidden) {
+                if(container.data('packery')) {
+                    container.data('packery').destroy();
+                    container.data('packery', null);
+                }
+
                 packery = container.packery($.extend({
                     rowHeight: getRowHeight()
                 }, localOptions.packeryOptions)).data('packery');
@@ -105,7 +110,7 @@
                 packery.layout();
 
                 if (hidden) {
-                    container.hide();
+                    this.hide(true);
                 } else {
                     container.show();
                 }
@@ -135,15 +140,19 @@
 
                 return this;
             },
-            hide: function (instant) {
+            hide: function (immediate, destroy) {
                 toHide = true;
-                if (instant) {
+                if (immediate) {
                     container.hide();
                 } else {
                     setTimeout(function () {
                         body.css('overflow-x', 'hidden');
                         if (toHide) {
                             container.hide();
+
+                            if(destroy) {
+                                container.remove();
+                            }
                         }
                     }, localOptions.animationTimeout);
                 }
@@ -158,11 +167,33 @@
 
                 return this;
             },
-            offset: function () {
+            offset: function (immediate) {
                 container.find('.widget-wrapper').each(function (index, value) {
                     var $value = $(value),
                         offsetTop = 300 - (Math.floor(Math.random() * 16) + 10) * 20,
-                        offsetLeft = 300 - (Math.floor(Math.random() * 16) + 10) * 20;
+                        offsetLeft = 300 - (Math.floor(Math.random() * 16) + 10) * 20,
+                        transition;
+
+                    if(immediate) {
+                        transition = $value.css('transition');
+                        $value.css({
+                            '-o-transition': '',
+                            '-ms-transition': '',
+                            '-moz-transition': '',
+                            '-webkit-transition': '',
+                            'transition': ''
+                        });
+
+                        setTimeout(function() {
+                            $value.css({
+                                '-o-transition': transition,
+                                '-ms-transition': transition,
+                                '-moz-transition': transition,
+                                '-webkit-transition': transition,
+                                'transition': transition
+                            });
+                        }, 0);
+                    }
 
                     $value.css({
                         'top': offsetTop,

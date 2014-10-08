@@ -1,4 +1,5 @@
 ServerDash.ApplicationAdapter =  DS.RESTAdapter.extend({
+    namespace: 'api',
     find: function(store, type, id, record) {
         var split = type.typeKey.split('widget'),
             isWidget = split.length === 2 && split[0] === '',

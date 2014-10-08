@@ -1,6 +1,6 @@
 ServerDash.LoginController = ServerDash.BaseController.extend({
     needs: 'application',
-    applicationController: 'controllers.application',
+    applicationControllerBinding: 'controllers.application',
     email: '',
     password: '',
     errorHeader: 'Unable to login!',
@@ -28,7 +28,7 @@ ServerDash.LoginController = ServerDash.BaseController.extend({
                         that.transitionToRoute('accountSetup');
                     }
                     else {
-                        that.transitionToRoute('index');
+                        that.transitionToRoute('profiles');
                     }
                 },
                 error: function(result) {

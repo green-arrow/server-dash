@@ -5,7 +5,7 @@ ServerDash.LoginRoute = Ember.Route.extend({
             firstLogin = appController.get('firstLogin');
 
         if(userId) {
-            this.transitionTo('index');
+            this.transitionTo('profiles');
         } else if(firstLogin) {
             this.transitionTo('accountSetup');
         }

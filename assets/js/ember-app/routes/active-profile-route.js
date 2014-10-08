@@ -3,12 +3,17 @@ ServerDash.ActiveProfileRoute = ServerDash.AuthorizedBaseRoute.extend({
         var that = this,
             store = that.store;
 
-        return store.find('profile', params.profile_id).then(function(data) {
-            that.controllerFor('activeProfile').set('widgetData', {
-                general: store.find('widgetGeneral', 1)
-            });
+        return store.find('profile', params.profile_id);
+    }
+});
 
-            return data;
+ServerDash.ActiveProfileIndexRoute = ServerDash.AuthorizedBaseRoute.extend({
+    model: function(params) {
+        return this.modelFor('activeProfile');
+    },
+    setupController: function(controller, model) {
+        this.controllerFor('activeProfile').set('widgetData', {
+            general: this.store.find('widgetGeneral', 1)
         });
     }
 });

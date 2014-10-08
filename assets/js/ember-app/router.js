@@ -3,8 +3,8 @@ ServerDash.Router = Ember.Router.extend({
 });
 
 ServerDash.Router.map(function() {
-    this.resource('profiles', { path: '/' }, function() {
-        this.resource('activeProfile', { path: ':profile_id' }, function() {
+    this.resource('profiles', function() {
+        this.resource('activeProfile', { path: '/:profile_id' }, function() {
             this.resource('widgets', function() {
                 this.route('add');
             });

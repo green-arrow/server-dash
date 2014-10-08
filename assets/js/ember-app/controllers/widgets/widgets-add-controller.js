@@ -1,4 +1,5 @@
 ServerDash.WidgetsAddController = Ember.Controller.extend({
+    needs: 'activeProfile',
     isShowing: false,
     showingDetails: false,
     actions: {
@@ -8,7 +9,7 @@ ServerDash.WidgetsAddController = Ember.Controller.extend({
             that.set('isShowing', false);
 
             setTimeout(function() {
-                that.transitionToRoute('index');
+                that.transitionToRoute('activeProfile', that.get('controllers.activeProfile.model.id'));
             }, 700);
         }
     }

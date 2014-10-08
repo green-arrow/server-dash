@@ -14,7 +14,7 @@ exports.getUnusedWidgetsForProfile = function(profileId, callback) {
                     callback(error);
                 } else {
                     filteredWidgets = allWidgets.filter(function(item) {
-                        return profileWidgetIds.indexOf(item.id) === -1;
+                        return profileWidgetIds.indexOf(+item.id) === -1;
                     });
 
                     callback(null, filteredWidgets);

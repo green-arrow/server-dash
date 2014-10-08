@@ -89,8 +89,9 @@ ServerDash.WidgetsAddView = Ember.View.extend({
             widgetHeight = widget.height(),
             width = $('.add-widget').width(),
             height = $(window).height() - 76,
+            scroll = $(window).scrollTop(),
             posX = (width / 2) - (widgetWidth / 2),
-            posY = (height / 2) - (widgetHeight / 2) - 76,
+            posY = (height / 2) - (widgetHeight / 2) - 76 + scroll,
             offsetX = posX - left,
             offsetY = posY - top;
 

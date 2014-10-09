@@ -13,7 +13,8 @@ ServerDash.ActiveProfileIndexRoute = ServerDash.AuthorizedBaseRoute.extend({
     },
     setupController: function(controller, model) {
         this.controllerFor('activeProfile').set('widgetData', {
-            general: this.store.find('widgetGeneral', 1)
+            general: this.store.find('widgetGeneral', 1),
+            diskUsage: this.store.find('widgetDiskUsage', 1)
         });
     }
 });

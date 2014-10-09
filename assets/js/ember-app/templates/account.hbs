@@ -1,5 +1,5 @@
 <div class="container">
-    <form role="form" method="post" action="doUpdate">
+    <form role="form" {{action 'doUpdate' on='submit'}}>
         <div class="row">
             <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
                 <h3>Update Account</h3>
@@ -34,7 +34,7 @@
                     {{input type="password" class="form-control" placeholder="Existing password" value=password}}
                 </div>
 
-                <button class="btn btn-primary" {{action 'doUpdate'}}>Update</button>
+                <button class="btn btn-primary" type="submit">Update</button>
             </div>
         </div>
     </form>

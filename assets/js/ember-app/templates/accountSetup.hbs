@@ -6,19 +6,21 @@
 
             {{error-alert hasError=hasError header=errorHeader message=errorMessage errorList=errorList}}
 
-            <div class="form-group">
-                <label for="email">Email address</label>
-                {{input type="email" class="form-control" placeholder="E-mail" value=newEmail}}
-            </div>
-            <div class="form-group">
-                <label for="password">New Password</label>
-                {{input type="password" class="form-control" placeholder="New Password" value=newPassword}}
-            </div>
-            <div class="form-group">
-                <label for="password">Confirm Password</label>
-                {{input type="password" class="form-control" placeholder="Confirm Password" value=confirmNewPassword}}
-            </div>
-            <button class="btn btn-primary" {{action 'update'}}>Update Account</button>
+            <form {{action 'update' on='submit'}}>
+                <div class="form-group">
+                    <label for="email">Email address</label>
+                    {{input type="email" class="form-control" placeholder="E-mail" value=newEmail}}
+                </div>
+                <div class="form-group">
+                    <label for="password">New Password</label>
+                    {{input type="password" class="form-control" placeholder="New Password" value=newPassword}}
+                </div>
+                <div class="form-group">
+                    <label for="password">Confirm Password</label>
+                    {{input type="password" class="form-control" placeholder="Confirm Password" value=confirmNewPassword}}
+                </div>
+                <button type="submit" class="btn btn-primary">Update Account</button>
+            </form>
         </div>
     </div>
 </div>

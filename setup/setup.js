@@ -3,23 +3,14 @@
  * This includes the default user account and
  * available widgets.
  */
-var sails = require('sails');
-var bcrypt = require('bcrypt');
+var sails = require('sails'),
+    bcrypt = require('bcrypt'),
+    User = require('../api/models/User'),
+    Widget = require('../api/models/Widget');
 
 sails.log.info('Running server-dash application setup.');
 
-var dbConfig = require('./../config/connections').connections.mongoDb;
-var databaseURI = dbConfig.host + ':' + dbConfig.port + '/' + dbConfig.database;
-var collections = ["user", "widget", 'profile', 'profileWidget'];
-
-sails.log.info('Connecting to MongoDB: ', databaseURI)
-
-var mongojs = require('mongojs');
-var db = mongojs.connect(databaseURI, collections);
-
-sails.log.info('Successfully connected to MongoDB instance.');
-
-var email = 'admin@localhost',
+var email = 'admin@local.host',
     password = 'Adm!n',
     needsDashboardGenerated = true;
 
@@ -49,7 +40,7 @@ module.exports.widgetSetup = function(callback) {
 };
 
 module.exports.userExists = function(callback) {
-    db.user.find({}, function(err, users) {
+    User.find({}, function(err, users) {
         if(err) {
             sails.log.error('Failed user lookup.\n', err);
             process.exit(1);
@@ -70,7 +61,7 @@ module.exports.generateDefaultUser = function(callback) {
                     sails.log.error('Failed to generate password hash with bcrypt.\n', err);
                     process.exit(1);
                 } else {
-                    db.user.save({email: email, password: hash, firstLogin: true}, function (err, saved) {
+                    User.create({email: email, password: hash, firstLogin: true}, function (err, saved) {
                         if (err || !saved) {
                             sails.log.error('Failed to create default user.\n', err || '');
                             process.exit(1);
@@ -90,7 +81,7 @@ module.exports.generateDefaultUser = function(callback) {
 };
 
 module.exports.widgetsExist = function(callback) {
-    db.widget.find({}, function(err, widgets) {
+    Widget.find({}, function(err, widgets) {
         if(err) {
             sails.log.error('Failed widget lookup.\n', err);
             process.exit(1);
@@ -103,7 +94,7 @@ module.exports.widgetsExist = function(callback) {
 module.exports.generateWidgets = function(callback) {
     var widgets = require('./widgets.js');
 
-    db.widget.insert(widgets, function(err, saved) {
+    Widget.create(widgets, function(err, saved) {
         if(err || !saved) {
             sails.log.error('Failed to generate widgets.\n', err || '');
             process.exit(1);

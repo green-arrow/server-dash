@@ -57,7 +57,7 @@ module.exports = [
     {
         _id: 12,
         name: 'users',
-        displayName: 'Users'
+        displayName: 'User'
     },
     {
         _id: 13,

@@ -49,20 +49,30 @@
         }
     }
 
-    // Application setup
-    var argv = require('minimist')(process.argv.slice(2));
+    var db = require('./api/services/db');
+    sails.log.info('Attempting to connect to MongoDB via Mongoose...');
+    db.connect(function(valid) {
+        if(valid) {
+            sails.log.info('Successfully connected to MongoDB via Mongoose!');
 
-    if(argv['force-setup']) {
-        require('shelljs/global');
-        sails.log.info('--force-setup flag detected, dropping server-dash database and running setup script.');
-        exec('mongo server-dash --eval "db.dropDatabase()"');
-    }
+            // Application setup
+            var argv = require('minimist')(process.argv.slice(2));
 
-    var setup = require('./setup/setup.js');
+            if(argv['force-setup']) {
+                require('shelljs/global');
+                sails.log.info('--force-setup flag detected, dropping server-dash database and running setup script.');
+                exec('mongo server-dash --eval "db.dropDatabase()"');
+            }
 
-    setup.userSetup(function() {
-        setup.widgetSetup(function() {
-            sails.lift(rc('sails'));
-        });
+            var setup = require('./setup/setup.js');
+
+            setup.userSetup(function() {
+                setup.widgetSetup(function() {
+                    sails.lift(rc('sails'));
+                });
+            });
+        } else {
+            sails.log.error('Error in Mongoose connection: ', error);
+        }
     });
 })();

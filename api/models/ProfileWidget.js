@@ -1,28 +1,11 @@
-/**
-* ProfileWidget.js
-*
-* @description :: TODO: You might write a short summary of how this model works and what it represents here.
-* @docs        :: http://sailsjs.org/#!documentation/models
-*/
+var mongoose = require('mongoose'),
+    schema = mongoose.Schema,
+    profileWidgetSchema = schema({
+        sortOrder:          Number,
+        widget:             { type: Number, ref: 'widget' },
+        lastUpdatedDate:    { type: Date, default: Date.now }
+    }),
+    ProfileWidget = mongoose.model('profileWidget', profileWidgetSchema);
 
-module.exports = {
-
-    attributes: {
-        sortOrder: {
-            type: 'integer'
-        },
-        profile: {
-            model: 'profile'
-        },
-        widget: {
-            model: 'widget'
-        },
-        toJSON: function() {
-            var obj = this.toObject();
-            delete obj.createdAt;
-            delete obj.updatedAt;
-            return obj;
-        }
-    }
-};
+module.exports = ProfileWidget;
 

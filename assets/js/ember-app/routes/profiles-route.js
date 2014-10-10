@@ -4,9 +4,11 @@ ServerDash.ProfilesRoute = ServerDash.AuthorizedBaseRoute.extend({
             store = that.store;
 
         return store.find('profile').catch(function(error) {
-            if(error.responseJSON.firstLogin) {
+            if(error.responseJSON && error.responseJSON.firstLogin) {
                 that.controllerFor('application').set('firstLogin', true);
                 that.transitionTo('accountSetup');
+            } else {
+                throw error;
             }
         });
     }

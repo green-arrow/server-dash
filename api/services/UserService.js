@@ -1,11 +1,27 @@
+var User = require('../models/User');
+
+var sanitize = function(obj){
+    obj = obj.toObject();
+    obj.id = obj._id.toString();
+    delete obj._id;
+    delete obj.__v;
+    delete obj.password;
+
+    return obj;
+};
+
 var validate = function(lookupCriteria, password, callback) {
     var error = {
         serverError: false,
         messages: []
     };
 
-    User.findOne(lookupCriteria).then(function(user) {
-        if (user) {
+    User.findOne(lookupCriteria).exec(function(err, user) {
+        if (err) {
+            sails.log.error('User lookup failed: ', err);
+            error.messages.push('User lookup failed');
+            error.serverError = true;
+        } else if (user) {
             var bcrypt = require("bcrypt");
 
             bcrypt.compare(password, user.password, function(err, result) {
@@ -18,25 +34,41 @@ var validate = function(lookupCriteria, password, callback) {
                     error = null;
                 }
 
-                callback(error, user);
+                callback(error, sanitize(user));
             });
         } else {
             error.messages.push('User lookup failed.');
             callback(error);
         }
-    }).fail(function(err) {
-        error.messages.push('Database error');
-        error.serverError = true;
-        callback(error);
     });
-}
+};
 
 exports.validateById = function(userId, password, callback) {
-    validate({ id: userId }, password, callback);
+    validate({ _id: userId }, password, callback);
 };
 
 exports.validateByEmail = function(email, password, callback) {
     validate({ email: email }, password, callback);
+};
+
+exports.findById = function(userId, callback) {
+    var error = {
+        serverError: false,
+        messages: []
+    };
+
+    User.findOne({ "_id": userId }).exec(function(err, user) {
+        if (err) {
+            sails.log.error('User lookup failed: ', err);
+            error.messages.push('User lookup failed');
+            error.serverError = true;
+        } else if (user) {
+            callback(null, sanitize(user));
+        } else {
+            error.messages.push('User lookup failed.');
+            callback(error);
+        }
+    });
 };
 
 exports.generateHash = function(password, callback) {
@@ -75,46 +107,49 @@ exports.updateUser = function(user, callback) {
             serverError: false,
             messages: []
         },
-        updateUser = function() {
-            User.update(userId, updatedObj,
-                function (err, saved) {
-                    if (err || !saved) {
-                        if(err.ValidationError) {
-                            error.messages = ValidationService.getErrorMessages('user', err.ValidationError);
-                        } else {
-                            sails.log.error('Failed to update user.\n', err || '');
-                            error.serverError = true;
-                            error.messages.push('Unexpected error');
-                        }
-
-                        callback(error);
+        updateUser = function(user) {
+            user.save(function (err, saved) {
+                if (err || !saved) {
+                    if(err.name === 'ValidationError') {
+                        Object.keys(err.errors).forEach(function(key) {
+                            error.messages.push(err.errors[key].message);
+                        });
                     } else {
-                        sails.log.info('User updated successfully.');
-                        callback(null, saved[0]);
+                        sails.log.error('Failed to update user.\n', err || '');
+                        error.serverError = true;
+                        error.messages.push('Unexpected error');
                     }
-                });
+
+                    callback(error);
+                } else {
+                    sails.log.info('User updated successfully.');
+                    callback(null, sanitize(user));
+                }
+            });
         };
 
-    if(email) {
-        updatedObj['email'] = email;
-    }
+    User.findOne({ "_id": updatedObj.id }).exec(function(err, user) {
+        if(email) {
+            user.email = email;
+        }
 
-    if(firstLogin !== undefined) {
-        updatedObj['firstLogin'] = firstLogin;
-    }
+        if(firstLogin !== undefined) {
+            user.firstLogin = firstLogin;
+        }
 
-    if(password) {
-        exports.generateHash(password, function(err, hash) {
-            if(err) {
-                error.messages.push('Error generating hash with bcrypt.');
-                error.serverError = true;
-                callback(error)
-            } else {
-                updatedObj['password'] = hash;
-                updateUser();
-            }
-        });
-    } else {
-        updateUser();
-    }
+        if(password) {
+            exports.generateHash(password, function(err, hash) {
+                if(err) {
+                    error.messages.push('Error generating hash with bcrypt.');
+                    error.serverError = true;
+                    callback(error)
+                } else {
+                    user.password = hash;
+                    updateUser(user);
+                }
+            });
+        } else {
+            updateUser(user);
+        }
+    });
 };

@@ -1,8 +1,14 @@
+var UserService = require('../services/UserService');
+
 module.exports = {
     findOne: function(req, res) {
-        User.findOneById(req.param('id')).then(function(user) {
-            if(!user) {
-                res.send(404, { errors: [ "User not found" ] });
+        UserService.findById(req.param('id'), function(err, user) {
+            if(err) {
+                if(err.serverError) {
+                    res.serverError({ errors: err.messages });
+                } else {
+                    res.badRequest({ errors: err.messages });
+                }
             } else {
                 res.ok({
                     user: user

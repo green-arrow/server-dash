@@ -1,3 +1,25 @@
+var Widget = require('../models/Widget'),
+    Profile = require('../models/Profile');
+
+var sanitize = function(obj){
+    obj = obj.toObject();
+    obj.id = obj._id.toString();
+    delete obj._id;
+    delete obj.__v;
+
+    return obj;
+};
+
+var sanitizeList = function(list) {
+    var sanitized = [];
+
+    list.forEach(function(item) {
+        sanitized.push(sanitize(item));
+    });
+
+    return sanitized;
+};
+
 exports.getUnusedWidgetsForProfile = function(profileId, callback) {
     var filteredWidgets,
         error = {
@@ -17,7 +39,7 @@ exports.getUnusedWidgetsForProfile = function(profileId, callback) {
                         return profileWidgetIds.indexOf(+item.id) === -1;
                     });
 
-                    callback(null, filteredWidgets);
+                    callback(null, sanitizeList(filteredWidgets));
                 }
             });
         }
@@ -32,7 +54,7 @@ var _getExistingProfileWidgets = function(profileId, callback) {
     };
 
     if(profileId) {
-        Profile.findOne(profileId).populate('profileWidgets').exec(function (err, profile) {
+        Profile.findOne({ "_id": profileId }).populate('profileWidgets').exec(function (err, profile) {
             if (err || !profile) {
                 sails.log.error('WidgetService._getExistingProfileWidgets: Error retrieving profile: ', err || '');
                 error.messages.push('Failed to retrieve profile.');

@@ -1,10 +1,31 @@
+var Profile = require('../models/Profile'),
+    ProfileWidget = require('../models/ProfileWidget'),
+    User = require('../models/User');
 
+var sanitize = function(obj){
+    obj = obj.toObject();
+    obj.id = obj._id.toString();
+    delete obj._id;
+    delete obj.__v;
+
+    return obj;
+};
+
+var sanitizeList = function(list) {
+    var sanitized = [];
+
+    list.forEach(function(item) {
+        sanitized.push(sanitize(item));
+    });
+
+    return sanitized;
+};
 
 exports.getUserProfiles = function(userId, callback) {
-    _userHasProfiles(userId, function(error, hasProfiles) {
+    _getUserProfiles(userId, function(error, profiles) {
         if(error) {
             callback(error);
-        } else if(!hasProfiles) {
+        } else if (!profiles.length) {
             _generateUserProfiles(userId, function(error) {
                 if(error) {
                     callback(error);
@@ -13,10 +34,9 @@ exports.getUserProfiles = function(userId, callback) {
                 }
             });
         } else {
-            _getUserProfiles(userId, callback);
+            callback(null, profiles);
         }
     });
-
 };
 
 exports.updateUserProfile = function(profile, callback) {
@@ -41,64 +61,42 @@ exports.updateUserProfile = function(profile, callback) {
     }
 };
 
-var _userHasProfiles = function(userId, callback) {
-    var error = {
-        serverError: false,
-        messages: []
-    };
-
-    User.findOne(userId).populate('profiles').exec(function(err, user) {
-        if(err || !user) {
-            sails.log.error('Error retrieving user: ', err || '');
-            error.messages.push('Failed to retrieve user.');
-            error.serverError = true;
-            callback(error);
-        } else if(!user.profiles.length) {
-            callback(null, false);
-        } else {
-            callback(null, true);
-        }
-    });
-};
-
 var _generateUserProfiles = function(userId, callback) {
-    var objectId = require('mongojs').ObjectId,
-        profiles = require('../../setup/profiles.js'),
+    var objectId = require('mongoose').Schema.ObjectId,
+        availableProfiles = require('../../setup/profiles.js'),
         profileWidgetLookup = require('../../setup/profileWidgets.js'),
-        profileWidgets = [], generatedId,
+        dbProfiles = [], dbProfileWidgets = [], dbProfile, dbProfileWidget, sortOrder
         error = {
             serverError: false,
             messages: []
         };
 
-    profiles.forEach(function(profile) {
-        generatedId = new objectId();
-        profile['id'] = generatedId;
-        profile['user'] = userId;
+    availableProfiles.forEach(function(availableProfile) {
+        dbProfile = new Profile(availableProfile);
+        dbProfile.user = userId;
 
-        profileWidgetLookup[profile.name].forEach(function(profileWidget) {
-            // Associate profile widget to profile
-            profileWidget['profile'] = profile['id'];
+        profileWidgetLookup[dbProfile.name].forEach(function(lookup) {
+            dbProfileWidget = new ProfileWidget(lookup);
+            dbProfileWidget._id = new objectId();
+            dbProfileWidgets.push(dbProfileWidget);
 
-            // Generate new ID for profileWidget
-            generatedId = new objectId();
-            profileWidget['id'] = generatedId;
-            profileWidget['widget'] = parseInt(profileWidget['widget'], 10);
-
-            profileWidgets.push(profileWidget);
+            // Create profile -> profile widget association
+            dbProfile.profileWidgets.push(dbProfileWidget._id);
         });
+
+        dbProfiles.push(dbProfile);
     });
 
-    Profile.create(profiles).exec(function(err, profiles) {
-        if(err || !profiles) {
-            sails.log.error('Error generating profiles: ', err || '');
+    Profile.create(dbProfiles, function(err) {
+        if (err) {
+            sails.log.error('Error generating profiles: ', err);
             error.messages.push('Failed to generate user profiles.');
             error.serverError = true;
             callback(error);
         } else {
-            ProfileWidget.create(profileWidgets).exec(function (err, profileWidgets) {
-                if(err || !profileWidgets) {
-                    sails.log.error('Error generating profile widgets: ', err || '');
+            ProfileWidget.create(dbProfileWidgets, function(err) {
+                if(err) {
+                    sails.log.error('Error generating profile widgets: ', err);
                     error.messages.push('Failed to generate profile widgets.');
                     error.serverError = true;
                     callback(error);
@@ -116,7 +114,18 @@ var _getUserProfiles = function(userId, callback) {
         messages: []
     };
 
-    async.auto({
+    Profile.find({ "user": userId }).exec(function(err, profiles) {
+        if (err) {
+            sails.log.error('Error retrieving user profiles: ', err);
+            error.messages.push('Error retrieving user profiles.');
+            error.serverError = true;
+            callback(error);
+        } else {
+            callback(null, sanitizeList(profiles));
+        }
+    });
+
+    /*async.auto({
         profiles: function(cb) {
             Profile.find({user: userId}).populate('profileWidgets').exec(cb);
         },
@@ -151,7 +160,7 @@ var _getUserProfiles = function(userId, callback) {
         } else {
             callback(null, results.map);
         }
-    });
+    });*/
 };
 
 var _updateUserProfile = function(profileWidgetArray, index, callback) {

@@ -1,11 +1,11 @@
-ServerDash.ActiveProfileView = Ember.View.extend({
+ServerDash.ProfileWidgetsView = Ember.View.extend({
     didInsertElement: function(){
         var that = this;
 
         that._super();
         that.setupPackery(false);
 
-        that.get('controller').on('modelChanged', that.onModelChanged.bind(that));
+        that.get('controller').on('profileChanged', that.onModelChanged.bind(that));
     },
     removeDataAttributes: function(element) {
         var regex = new RegExp('^(data-)', "g");
@@ -40,7 +40,7 @@ ServerDash.ActiveProfileView = Ember.View.extend({
     setupPackery: function(withTransition) {
         var that = this,
             controller = that.get('controller'),
-            packeryEl = Ember.$('#main .packery[data-profile-id="' + controller.get('model.id') + '"]');
+            packeryEl = Ember.$('#main .packery[data-profile-id="' + controller.get('profile.id') + '"]');
 
         withTransition = withTransition !== undefined ? withTransition : true
 
@@ -50,27 +50,18 @@ ServerDash.ActiveProfileView = Ember.View.extend({
                 widgetIdAttr: 'data-profile-widget-id',
                 methods: {
                     saveLayout: function (profileId, items) {
-                        var model = that.get('controller.model'),
-                            profile, profileWidgetArray, profileWidget, item;
+                        var profileWidgetArray = controller.get('model.content'),
+                            item;
 
-                        for (var i = 0, len = model.length; i < len; i++) {
-                            if (model[i].get('id') === profileId) {
-                                profile = model[i];
-                                break;
-                            }
-                        }
-
-                        if (profile) {
-                            profileWidgetArray = profile.get('profileWidgets').content;
+                        if(profileWidgetArray.length) {
                             for (var i = 0, len = profileWidgetArray.length; i < len; i++) {
-                                profileWidget = profileWidgetArray[i];
                                 item = $.grep(items, function (e) {
-                                    return e.id === profileWidget.id;
+                                    return e.id === profileWidgetArray[i].id;
                                 })[0];
-                                profileWidget.set('sortOrder', item.sortOrder);
+                                profileWidgetArray[i].set('sortOrder', item.sortOrder);
                             }
 
-                            profile.save();
+                            profileWidgetArray.invoke('save');
                         }
                     }
                 }

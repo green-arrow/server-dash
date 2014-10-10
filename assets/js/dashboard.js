@@ -43,12 +43,12 @@
         }
 
         function onLayoutUpdated() {
-            var self = this;
+            var packDash = this;
 
             clearTimeout(updateTimeout);
 
             updateTimeout = setTimeout($.proxy(function () {
-                var packeryId = self.packDash.element.attr(localOptions.packeryIdAttr),
+                var packeryId = packDash.element.attr(localOptions.packeryIdAttr),
                     items = this.getPackeryItems(),
                     orderedItems = [];
 
@@ -60,7 +60,7 @@
                 }
 
                 localOptions.methods.saveLayout(packeryId, orderedItems);
-            }, self), 2000);
+            }, packDash), 2000);
         }
 
         return {

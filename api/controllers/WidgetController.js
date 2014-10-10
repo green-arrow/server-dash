@@ -1,9 +1,5 @@
-/**
- * WidgetsController
- *
- * @description :: Server-side logic for managing widgets
- * @help        :: See http://links.sailsjs.org/docs/controllers
- */
+var WidgetService = require('../services/WidgetService'),
+    ShellService = require('../services/ShellService');
 
 module.exports = {
     index: function(req, res) {

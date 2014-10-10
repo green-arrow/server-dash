@@ -1,37 +1,17 @@
-/**
-* User.js
-*
-* @description :: TODO: You might write a short summary of how this model works and what it represents here.
-* @docs        :: http://sailsjs.org/#!documentation/models
-*/
+var mongoose = require('mongoose'),
+    schema = mongoose.Schema,
+    objectId = schema.ObjectId,
+    userSchema = schema({
+        email:             { type: String, required: 'E-mail is required' },
+        password:          { type: String, required: 'Password is required' },
+        firstLogin:        Boolean,
+        lastUpdatedDate:   { type: Date, default: Date.now }
+    }),
+    User = mongoose.model('user', userSchema);
 
-module.exports = {
+User.schema.path('email').validate(function(email) {
+    var emailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return emailRegex.test(email);
+}, 'Invalid e-mail address');
 
-  attributes: {
-    email: {
-        type: 'email',
-        required: true,
-        index: true,
-        unique: true
-    },
-    password: {
-        type: 'string',
-        required: true
-    },
-    firstLogin: {
-        type: 'boolean'
-    },
-    profiles: {
-        collection: 'profile',
-        via: 'user'
-    },
-    toJSON: function() {
-        var obj = this.toObject();
-        delete obj.password;
-        delete obj.createdAt;
-        delete obj.updatedAt;
-        return obj;
-    }
-  }
-};
-
+module.exports = User;

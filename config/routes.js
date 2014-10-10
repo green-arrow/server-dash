@@ -52,6 +52,46 @@ module.exports.routes = {
   '/auth/doUpdate': {
     controller: 'auth',
     action: 'doUpdate'
+  },
+
+  'get /api/users/:id': {
+    controller: 'user',
+    action: 'findOne'
+  },
+
+  'put /api/users': {
+    controller: 'user',
+    action: 'update'
+  },
+
+  'get /api/users/validate': {
+    controller: 'user',
+    action: 'validate'
+  },
+
+  'get /api/profiles': {
+    controller: 'profile',
+    action: 'index'
+  },
+
+  'put /api/profiles': {
+    controller: 'profile',
+    action: 'update'
+  },
+
+  'get /api/profileWidgets/:id': {
+    controller: 'profileWidget',
+    action: 'findOne'
+  },
+
+  'get /api/widgets': {
+    controller: 'widget',
+    action: 'index'
+  },
+
+  'get /api/widgets/general': {
+    controller: 'widget',
+    action: 'general'
   }
 
   /***************************************************************************

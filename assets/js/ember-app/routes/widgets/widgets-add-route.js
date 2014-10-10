@@ -1,4 +1,7 @@
 ServerDash.WidgetsAddRoute = ServerDash.AuthorizedBaseRoute.extend({
+    renderTemplate: function() {
+        this.render({ outlet: 'addWidget' });
+    },
     model: function(params) {
         return this.store.find('widget', { profileId: this.modelFor('activeProfile').get('id') });
     },

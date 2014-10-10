@@ -4,5 +4,5 @@ ServerDash.ProfileWidgetsController = Ember.Controller.extend(Ember.Evented, {
     widgetDataBinding: 'controllers.activeProfile.widgetData',
     profileObserver: function() {
         this.trigger('profileChanged');
-    }.observes('profileId')
+    }.observes('profile.id')
 });

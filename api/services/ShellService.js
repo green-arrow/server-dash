@@ -35,7 +35,7 @@ exports.getHostname = function() {
 };
 
 exports.getDiskUsage = function() {
-    var diskDataString = exec('df -Ph').output,
+    var diskDataString = exec('df -Ph', execOpts).output,
         diskDataArray = diskDataString.split('\n'),
         disks = [];
 

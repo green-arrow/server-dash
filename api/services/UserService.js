@@ -102,7 +102,6 @@ exports.updateUser = function(user, callback) {
         email = user.email,
         password = user.password,
         firstLogin = user.firstLogin,
-        updatedObj = {},
         error = {
             serverError: false,
             messages: []
@@ -128,7 +127,7 @@ exports.updateUser = function(user, callback) {
             });
         };
 
-    User.findOne({ "_id": updatedObj.id }).exec(function(err, user) {
+    User.findOne({ "_id": userId }).exec(function(err, user) {
         if(email) {
             user.email = email;
         }

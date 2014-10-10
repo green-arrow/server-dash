@@ -1,4 +1,7 @@
 ServerDash.ProfileWidgetsRoute = ServerDash.AuthorizedBaseRoute.extend({
+    renderTemplate: function() {
+        this.render({ outlet: 'widgets' });
+    },
     model: function(params) {
         var that = this,
             store = that.store;

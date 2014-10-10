@@ -33,3 +33,25 @@ exports.getTime = function() {
 exports.getHostname = function() {
     return exec('uname -n', execOpts).output;
 };
+
+exports.getDiskUsage = function() {
+    var diskDataString = exec('df -Ph').output,
+        diskDataArray = diskDataString.split('\n'),
+        disks = [];
+
+    for(var i = 1; i < diskDataArray.length - 1; i++) { //starting at 1 to not send back the header
+        var entryRow = diskDataArray[i].split(/[ \t]{2,}/);
+        disks.push(
+            {
+                fileSystem: entryRow[0],
+                size: entryRow[1],
+                used: entryRow[2],
+                available: entryRow[3],
+                capacity: entryRow[4],
+                mounted: entryRow[5]
+            }
+        )
+    }
+
+    return disks;
+};

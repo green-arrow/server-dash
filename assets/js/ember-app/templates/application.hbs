@@ -7,8 +7,8 @@
             <div class="col-xs-6 text-right">
                 {{#if user}}
                     <span class="hidden-xs">Welcome, {{user.email}}</span>
-                    {{#if onIndexRoute}}
-                        <span class="visible-xs-inline">
+                    {{#if viewingProfile}}
+                        <span class="visible-xs-inline visible-sm-inline">
                             <i class="fa fa-2x fa-bars" {{action 'toggleSidebar'}}></i>
                         </span>
                         {{#link-to 'account'}}

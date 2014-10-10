@@ -15,7 +15,7 @@ ServerDash.ProfileWidgetsView = Ember.View.extend({
 
             $.each(this.attributes, function(i, attr){
                 if (attr && attr.specified && attr.name.search(regex) >= 0) {
-                    attrsToRemove += ' '+attr.name;
+                    attrsToRemove += ' '+ attr.name;
                 }
             });
 
@@ -31,10 +31,9 @@ ServerDash.ProfileWidgetsView = Ember.View.extend({
                 var oldDashboard = ServerDash.Dashboard.clone();
                 that.removeDataAttributes(oldDashboard.getPackeryDashboard().element);
                 oldDashboard.hide(true);
-                Ember.run.scheduleOnce('afterRender', that, that.setupPackery);
-            } else {
-                Ember.run.scheduleOnce('afterRender', that, that.setupPackery);
             }
+
+            Ember.run.scheduleOnce('afterRender', that, that.setupPackery);
         }
     },
     setupPackery: function(withTransition) {

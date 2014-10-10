@@ -31,6 +31,16 @@ module.exports = {
         };
 
         res.ok(data);
+    },
+    diskUsage: function(req, res) {
+        var data = {
+            "widgetDiskUsage": {
+                "id": 1,
+                "diskUsage": ShellService.getDiskUsage()
+            }
+        };
+
+        res.ok(data);
     }
 };
 

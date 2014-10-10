@@ -6,7 +6,7 @@ module.exports = [
     },
     {
         _id: 2,
-        name: 'disk',
+        name: 'disk-usage',
         displayName: 'Disk Usage'
     },
     {

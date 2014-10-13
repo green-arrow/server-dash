@@ -1,4 +1,5 @@
-var UserService = require('../services/UserService');
+var sails = require('sails'),
+    UserService = require('../services/UserService');
 
 module.exports = {
     logout: function(req, res) {

@@ -17,19 +17,6 @@ module.exports = {
                 });
             }
         });
-    },
-    update: function(req, res) {
-        ProfileService.updateUserProfile(req.body.profile, function(err) {
-            if(err) {
-                if(err.serverError) {
-                    res.serverError({ errors: err.messages });
-                } else {
-                    res.badRequest({ errors: err.messages });
-                }
-            } else {
-                res.ok();
-            }
-        });
     }
 };
 

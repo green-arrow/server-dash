@@ -74,14 +74,14 @@ module.exports.routes = {
     action: 'index'
   },
 
-  'put /api/profiles': {
-    controller: 'profile',
-    action: 'update'
-  },
-
   'get /api/profileWidgets/:id': {
     controller: 'profileWidget',
     action: 'findOne'
+  },
+
+  'put /api/profileWidgets/:id': {
+    controller: 'profileWidget',
+    action: 'update'
   },
 
   'get /api/widgets': {

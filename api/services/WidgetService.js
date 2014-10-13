@@ -1,4 +1,5 @@
-var Widget = require('../models/Widget'),
+var sails = require('sails'),
+    Widget = require('../models/Widget'),
     Profile = require('../models/Profile');
 
 var sanitize = function(obj){

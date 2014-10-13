@@ -1,4 +1,5 @@
-var Profile = require('../models/Profile'),
+var sails = require('sails'),
+    Profile = require('../models/Profile'),
     ProfileWidget = require('../models/ProfileWidget'),
     User = require('../models/User');
 
@@ -39,33 +40,11 @@ exports.getUserProfiles = function(userId, callback) {
     });
 };
 
-exports.updateUserProfile = function(profile, callback) {
-    var error = {
-        serverError: false,
-        messages: []
-    };
-
-    if(profile.profileWidgets.length) {
-        _updateUserProfile(profile.profileWidgets, 0, function(err) {
-            if(err) {
-                sails.log.error('Error updating user profiles: ', err);
-                error.messages.push('Failed to update user profiles.');
-                error.serverError = true;
-                callback(error);
-            } else {
-                callback();
-            }
-        });
-    } else {
-        callback();
-    }
-};
-
 var _generateUserProfiles = function(userId, callback) {
     var objectId = require('mongoose').Schema.ObjectId,
         availableProfiles = require('../../setup/profiles.js'),
         profileWidgetLookup = require('../../setup/profileWidgets.js'),
-        dbProfiles = [], dbProfileWidgets = [], dbProfile, dbProfileWidget, sortOrder
+        dbProfiles = [], dbProfileWidgets = [], dbProfile, dbProfileWidget, sortOrder,
         error = {
             serverError: false,
             messages: []
@@ -124,60 +103,4 @@ var _getUserProfiles = function(userId, callback) {
             callback(null, sanitizeList(profiles));
         }
     });
-
-    /*async.auto({
-        profiles: function(cb) {
-            Profile.find({user: userId}).populate('profileWidgets').exec(cb);
-        },
-        profileWidgets: ['profiles', function(cb, results) {
-            var profileWidgetIds = [];
-            _.each(results.profiles, function(profile) {
-                profileWidgetIds = _.union(profileWidgetIds, _.pluck(profile.profileWidgets, 'id'));
-            });
-
-            ProfileWidget.findById(profileWidgetIds).populate('widget').exec(cb);
-        }],
-        map: ['profileWidgets', function(cb, results) {
-            //sails.log.info('map: profileWidgets: ', results.profileWidgets);
-            var profileWidgetMapper = _.indexBy(results.profileWidgets, 'id');
-            // Map profiles to profileWidgets
-            var profilesMappedToProfileWidgets = _.map(results.profiles, function(profile) {
-                var _profile = profile.toObject();
-                _profile.profileWidgets = _.map(profile.profileWidgets, function(profileWidget) {
-                    return profileWidgetMapper[profileWidget.id];
-                });
-                return _profile;
-            });
-
-            return cb(null, profilesMappedToProfileWidgets);
-        }]
-    }, function(err, results) {
-        if(err) {
-            sails.log.error('Failed to retrieve user profiles: ', err);
-            error.messages.push('Failed to retrieve user profiles.');
-            error.serverError = true;
-            callback(error);
-        } else {
-            callback(null, results.map);
-        }
-    });*/
-};
-
-var _updateUserProfile = function(profileWidgetArray, index, callback) {
-    var profileWidget = profileWidgetArray[index];
-    if(!profileWidget) {
-        callback();
-    } else {
-        if (typeof profileWidget.widget === 'object') {
-            profileWidget.widget = profileWidget.widget.id;
-        }
-
-        ProfileWidget.update(profileWidget.id, profileWidget).exec(function (err, result) {
-            if (err) {
-                callback(err);
-            } else {
-                _updateUserProfile(profileWidgetArray, index + 1, callback);
-            }
-        });
-    }
 };

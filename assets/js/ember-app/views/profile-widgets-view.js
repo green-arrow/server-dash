@@ -60,7 +60,7 @@ ServerDash.ProfileWidgetsView = Ember.View.extend({
                                 profileWidgetArray[i].set('sortOrder', item.sortOrder);
                             }
 
-                            profileWidgetArray.invoke('save');
+                            controller.send('save');
                         }
                     }
                 }

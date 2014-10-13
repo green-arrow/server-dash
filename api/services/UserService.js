@@ -1,4 +1,5 @@
-var User = require('../models/User');
+var sails = require('sails'),
+    User = require('../models/User');
 
 var sanitize = function(obj){
     obj = obj.toObject();

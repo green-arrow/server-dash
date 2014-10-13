@@ -41,6 +41,16 @@ module.exports = {
         };
 
         res.ok(data);
+    },
+    process: function(req, res) {
+        var data = {
+            "widgetProcess": {
+                "id": 1,
+                "processes": ShellService.getProcesses()
+            }
+        };
+
+        res.ok(data);
     }
 };
 

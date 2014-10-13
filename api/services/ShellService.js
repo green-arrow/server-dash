@@ -41,17 +41,44 @@ exports.getDiskUsage = function() {
 
     for(var i = 1; i < diskDataArray.length - 1; i++) { //starting at 1 to not send back the header
         var entryRow = diskDataArray[i].split(/[ \t]{2,}/);
-        disks.push(
-            {
-                fileSystem: entryRow[0],
-                size: entryRow[1],
-                used: entryRow[2],
-                available: entryRow[3],
-                capacity: entryRow[4],
-                mounted: entryRow[5]
-            }
-        )
+        disks.push({
+            fileSystem: entryRow[0],
+            size: entryRow[1],
+            used: entryRow[2],
+            available: entryRow[3],
+            capacity: entryRow[4],
+            mounted: entryRow[5]
+        });
     }
 
     return disks;
+};
+
+exports.getProcesses = function() {
+  var processesString = exec('ps aux').output,
+      processesArray = processesString.split('\n'),
+      processes = [];
+
+    for(var i = 1; i < processesArray.length - 1; i++) {
+        var processEntry = processesArray[i].split(/[ \t]{1,}/),
+            commandString = processEntry[10],
+            commandSlashIndex = commandString.lastIndexOf('/'),
+            command = commandSlashIndex !== -1 ? commandString.substring(commandSlashIndex + 1) : commandString;
+
+        processes.push({
+            user: processEntry[0],
+            pid: processEntry[1],
+            cpu: processEntry[2],
+            mem: processEntry[3],
+            vsz: processEntry[4],
+            rss: processEntry[5],
+            tty: processEntry[6],
+            stat: processEntry[7], //will add column later when responsive table is finished. Front-end change to widget-process.hbs needs to be made as well
+            start: processEntry[8],
+            time: processEntry[9],
+            command: command
+        });
+    }
+
+    return processes;
 };

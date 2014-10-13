@@ -7,6 +7,10 @@ module.exports = {
         {
             sortOrder: 2,
             widget: 2
+        },
+        {
+            sortOrder: 3,
+            widget: 15
         }
     ],
     "Network": [

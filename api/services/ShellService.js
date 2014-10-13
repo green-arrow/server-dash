@@ -55,7 +55,7 @@ exports.getDiskUsage = function() {
 };
 
 exports.getProcesses = function() {
-  var processesString = exec('ps aux').output,
+  var processesString = exec('ps aux', execOpts).output,
       processesArray = processesString.split('\n'),
       processes = [];
 

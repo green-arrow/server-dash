@@ -61,9 +61,8 @@ exports.getProcesses = function() {
 
     for(var i = 1; i < processesArray.length - 1; i++) {
         var processEntry = processesArray[i].split(/[ \t]{1,}/),
-            commandString = processEntry[10],
-            commandSlashIndex = commandString.lastIndexOf('/'),
-            command = commandSlashIndex !== -1 ? commandString.substring(commandSlashIndex + 1) : commandString;
+            match = processEntry[10].match(/.*\/(.*)/),
+            command = match !== null ? match[1] : processEntry[10];
 
         processes.push({
             user: processEntry[0],

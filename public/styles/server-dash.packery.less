@@ -1,0 +1,156 @@
+.make-packery-layout();
+
+.packery {
+  margin: 1%;
+  box-sizing: border-box;
+  position: absolute;
+  top: 76px;
+  right: 0;
+  bottom: 0;
+  .transition(all 0.7s ease-in-out);
+
+  &.add-widget {
+    opacity: 0;
+    z-index: 11;
+
+    &.in {
+      opacity: 1.0;
+    }
+  }
+}
+
+.add-widget-button-bar {
+  position: fixed;
+  top: 0;
+  height: 50px;
+  width: 100%;
+  padding: 10px 10px 10px 10px;
+  opacity: 0;
+  z-index: 11;
+  .transition(opacity 0.7s ease-in-out);
+
+  .btn {
+    float: right;
+  }
+
+  &.in {
+    opacity: 1.0;
+  }
+}
+
+/** Widgets **/
+
+.item {
+
+  .widget-wrapper {
+    float: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    border: 1px solid #c9cacb;
+    padding: 10px;
+    background-color: #fff;
+    .transition(all 0.7s ease-in-out);
+
+    /* other items appear above the handle */
+    > * {
+      position: relative;
+    }
+
+    .header {
+      font-size: 1.2em;
+      color: #9d9fa2;
+      font-weight: bold;
+      margin-top: 0;
+      cursor: move;
+    }
+
+    .handle {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      cursor: move;
+      z-index: 0;
+    }
+
+    .content-wrapper {
+      top: 30px;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      overflow: auto;
+      padding: 10px;
+      position: absolute;
+    }
+  }
+
+  &.active, &.is-dragging, .is-positioning-post-drag {
+    z-index: 1;
+  }
+
+  &.is-dragging .widget-wrapper {
+    box-shadow: 0 1px 10px -1px rgba(0,0,0,.7);
+    transform: rotate(5deg);
+    -ms-transform: rotate(5deg); /* IE 9 */
+    -webkit-transform: rotate(5deg); /* Opera, Chrome, and Safari */
+  }
+}
+
+#add-widget .item {
+  .header {
+    cursor: default;
+  }
+
+  .handle {
+    cursor: default;
+  }
+
+  .button-bar {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 10px;
+
+    .fa {
+      font-size: 1.5em;
+      color: #9D9FA2;
+      cursor: pointer;
+
+      &.show {
+        display: inline-block !important; // Override Bootstrap's 'show' class
+      }
+
+      &.fa-bars, &.fa-remove {
+        margin-left: 10px;
+      }
+    }
+  }
+}
+
+.item.sample-widget {
+  color: #fff;
+  height: 300px;
+  background: transparent;
+
+  .header {
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 0;
+  }
+
+  .content {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    display: none;
+  }
+
+  img {
+    background-color: white;
+    max-height: 240px;
+    margin-top: 5px;
+  }
+}

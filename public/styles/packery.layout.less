@@ -1,0 +1,73 @@
+@lg-columns: 8;
+@default-columns: 6;
+@small-columns: 4;
+@xsmall-columns: 2;
+@mobile-columns: 1;
+
+.make-packery-layout() {
+
+  .item {
+    box-sizing: border-box;
+  }
+
+  .packery-layout(@columns, @gutterPercent, @prefix) {
+    @singleItemWidth: (100% - (@gutterPercent * (@columns - 1))) / @columns;
+
+    .gutter-sizer {
+      width: @gutterPercent;
+    }
+
+    .grid-sizer {
+      width: @singleItemWidth;
+    }
+
+    .item-col(@index) when (@index = 1) {
+      .item.col-@{index},
+      .item.col-@{prefix}-@{index} {
+        width: @singleItemWidth;
+      }
+
+      .item-col(@index + 1);
+    }
+
+    .item-col(@index) when (@index > 1) and (@index < @columns) { // from 1 - @columns, include number of cols and gutter in calculation
+      .item.col-@{index},
+      .item.col-@{prefix}-@{index} {
+        width: (@singleItemWidth * @index) + (@gutterPercent * (@index - 1));
+      }
+
+      .item-col(@index + 1);
+    }
+
+    .item-col(@index) when (@index >= @columns) and (@index =< @lg-columns) { // full-width items
+      .item.col-@{index},
+      .item.col-@{prefix}-@{index} {
+        width: 100%;
+      }
+
+      .item-col(@index + 1);
+    }
+
+    .item-col(1); // kickstart it
+  }
+
+  @media (min-width: 1200px) {
+    .packery-layout(@lg-columns, 1%, xl);
+  }
+
+  @media (min-width: 992px) and (max-width: 1199px) {
+    .packery-layout(@default-columns, 1%, lg);
+  }
+
+  @media (min-width: 768px) and (max-width: 991px) {
+    .packery-layout(@small-columns, 1%, md);
+  }
+
+  @media (min-width: 481px) and (max-width: 767px) {
+    .packery-layout(@xsmall-columns, 1%, sm);
+  }
+
+  @media (max-width: 480px) {
+    .packery-layout(@mobile-columns, 1%, xs);
+  }
+}

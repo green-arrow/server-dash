@@ -1,9 +1,0 @@
-{{#each profileWidget in model}}
-    {{#render-widget profileWidget.widget.name
-                     name=profileWidget.widget.name
-                     profileWidgetId=profileWidget.id
-                     title=profileWidget.widget.displayName
-                     sortOrder=profileWidget.sortOrder
-                     data=widgetData}}
-    {{/render-widget}}
-{{/each}}

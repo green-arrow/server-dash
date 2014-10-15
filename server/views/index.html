@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>New Ember-Sails App</title>
+
+    <!-- Viewport mobile tag for sensible mobile support -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/assets/styles/application.css">
+  </head>
+
+  <body>
+
+    <script src="/assets/js/application.js"></script>
+    <script type="text/javascript" src="/assets/js/ember-templates.js"></script>
+    <script type="text/javascript">
+        {{#if userId}}
+            ServerDash.userId = '{{ userId }}';
+        {{/if}}
+
+        {{#if firstLogin}}
+            ServerDash.firstLogin = true;
+        {{else}}
+            ServerDash.firstLogin = false;
+        {{/if}}
+    </script>
+  </body>
+</html>

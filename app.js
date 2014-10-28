@@ -46,7 +46,7 @@ db.connect(function(valid) {
                     });
 
                     server.start(function() {
-                        server.log('info', 'Server running at: ', server.info.uri);
+                        server.log('info', 'Server running at: ' + server.info.uri);
                     });
                 });
             });

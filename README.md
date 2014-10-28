@@ -6,7 +6,7 @@ Base application / template taken from https://github.com/green-arrow/ember-sail
 
 ## Prerequisites
 
-To use this application, you need to have NodeJS, Sails, and MongoDB installed.
+To use this application, you need to have NodeJS and MongoDB installed.
 
 ### Homebrew
 
@@ -16,25 +16,17 @@ Visit http://brew.sh/ for instructions on downloading and installing.
 
 Before running any of these ``brew install`` commands, make sure to do a ``brew doctor`` and ``brew update``.
 
-NOTE: This step is completely optional and mostly meant for developers. You can download and install all of the below 
-packages without Homebrew (and you'll need to if you're running this on your Linux server, which is exactly where 
+NOTE: This step is completely optional and mostly meant for developers. You can download and install all of the below
+packages without Homebrew (and you'll need to if you're running this on your Linux server, which is exactly where
 this project is meant to run).
 
 ### NodeJS
 
-To install NodeJS, visit http://nodejs.org/ and follow the install instructions. 
+To install NodeJS, visit http://nodejs.org/ and follow the install instructions.
 If you're running on a Mac with Homebrew installed, you can install NodeJS like this:
 
 ```
 brew install node
-```
-
-### Sails
-
-After you have NodeJS installed, you can use the node package manager (``npm``) to globally install Sails:
-
-```
-npm install -g sails
 ```
 
 ### MongoDB
@@ -61,18 +53,20 @@ Install dependencies
 
 ```
 cd server-dash
-npm install
-bower install
+npm install && bower install
 ```
 
-Run the application (by default this will be located at ``http://localhost:1337/``)
+### Run the application
 
-NOTE: It is important to use the following command. ``app.js`` has been modified to
-run a setup script that auto-generates necessary database records.
+By default this will be located at ``http://localhost:3000/``.
 
-```
-node app.js
-```
+This requires two parts, running ``gulp`` to build the application and ``node app.js`` to run the node server.
+I generally like to keep two tabs open in terminal, one for node and one for gulp.
+
+The default gulp task will watch your files for changes, build when changes occur, and execute live-reload
+(look for the Chrome live-reload extension for this :) ).
+
+### Defaults
 
 If this is your first time running the application, the default login credentials are:
 
@@ -81,6 +75,8 @@ Email: admin@localhost
 Password: Adm!n
 
 These credentials will be displayed in the console window after starting the application for the first time.
+
+### Forcing Setup
 
 If you ever reach a point where you would like to completely reset the application and database, use the following command:
 

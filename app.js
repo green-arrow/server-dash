@@ -5,15 +5,6 @@ var path = require('path'),
     routes = require('./server/routes'),
     db = require('./server/services/db');
 
-// Setup server
-routes.registerRoutes(server);
-server.views({
-    engines: {
-        html: require('handlebars')
-    },
-    path: path.join(__dirname, 'server/views')
-});
-
 console.log('Attempting to connect to MongoDB via Mongoose...');
 db.connect(function(valid) {
     if(valid) {
@@ -32,6 +23,8 @@ db.connect(function(valid) {
 
         setup.userSetup(function() {
             setup.widgetSetup(function() {
+
+                // Setup server
                 server.pack.register([good, require('hapi-auth-cookie')], function(err) {
                     if(err) {
                         throw err; // plugin failed
@@ -43,6 +36,14 @@ db.connect(function(valid) {
                         redirectTo: false,
                         isSecure: false,
                         ttl: 1000 * 60 * 60 * 24
+                    });
+
+                    routes.registerRoutes(server);
+                    server.views({
+                        engines: {
+                            html: require('handlebars')
+                        },
+                        path: path.join(__dirname, 'server/views')
                     });
 
                     server.start(function() {

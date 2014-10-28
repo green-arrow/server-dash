@@ -2,24 +2,24 @@ var WidgetService = require('../services/widgetService'),
     ShellService = require('../services/shellService');
 
 module.exports = {
-    index: function(req, res) {
-        var profileId = req.param('profileId');
+    index: function(request, reply) {
+        var profileId = request.query.profileId;
 
         WidgetService.getUnusedWidgetsForProfile(profileId, function(err, widgets) {
             if(err) {
                 if(err.serverError) {
-                    res.serverError({ errors: err.messages });
+                    reply({ errors: err.messages }).code(500);
                 } else {
-                    res.badRequest({ errors: err.messages });
+                    reply({ errors: err.messages }).code(400);
                 }
             } else {
-                res.ok({
+                reply({
                     widgets: widgets
                 });
             }
         });
     },
-	general: function(req, res) {
+	general: function(request, reply) {
         var data = {
             "widgetGeneral": {
                 "id": 1,
@@ -30,9 +30,9 @@ module.exports = {
             }
         };
 
-        res.ok(data);
+        reply(data);
     },
-    diskUsage: function(req, res) {
+    diskUsage: function(request, reply) {
         var data = {
             "widgetDiskUsage": {
                 "id": 1,
@@ -40,9 +40,9 @@ module.exports = {
             }
         };
 
-        res.ok(data);
+        reply(data);
     },
-    process: function(req, res) {
+    process: function(request, reply) {
         var data = {
             "widgetProcess": {
                 "id": 1,
@@ -50,7 +50,7 @@ module.exports = {
             }
         };
 
-        res.ok(data);
+        reply(data);
     }
 };
 

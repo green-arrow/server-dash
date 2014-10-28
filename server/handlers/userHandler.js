@@ -1,50 +1,53 @@
 var UserService = require('../services/userService');
 
 module.exports = {
-    findOne: function(req, res) {
-        UserService.findById(req.param('id'), function(err, user) {
+    findOne: function(request, reply) {
+        UserService.findById(request.params.id, function(err, user) {
             if(err) {
                 if(err.serverError) {
-                    res.serverError({ errors: err.messages });
+                    reply({ errors: err.messages }).code(500);
                 } else {
-                    res.badRequest({ errors: err.messages });
+                    reply({ errors: err.messages }).code(400);
                 }
             } else {
-                res.ok({
+                reply({
                     user: user
                 });
             }
         });
     },
-    update: function(req, res) {
-        UserService.updateUser(req.body.user, function(err, user) {
+    update: function(request, reply) {
+        UserService.updateUser(request.payload.user, function(err, user) {
             if(err) {
                 if(err.serverError) {
-                    res.serverError({ errors: err.messages });
+                    reply({ errors: err.messages }).code(500);
                 } else {
-                    res.badRequest({ errors: err.messages });
+                    reply({ errors: err.messages }).code(400);
                 }
             } else {
-                req.session.user = user;
-                res.ok({
+                request.auth.session.set({
+                    authenticated: true,
+                    user: user
+                });
+                reply({
                     user: user
                 });
             }
         });
     },
-    validate: function(req, res) {
-        var userId = req.session.user.id,
-            password = req.param('password');
+    validate: function(request, reply) {
+        var userId = request.auth.credentials.user.id,
+            password = request.payload.password;
 
         UserService.validateById(userId, password, function(err, user) {
             if(err) {
                 if(err.serverError) {
-                    res.serverError({ errors: err.messages });
+                    reply({ errors: err.messages }).code(500);
                 } else {
-                    res.badRequest({ errors: err.messages });
+                    reply({ errors: err.messages }).code(400);
                 }
             } else {
-                res.ok();
+                reply();
             }
         });
     }

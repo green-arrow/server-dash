@@ -1,18 +1,18 @@
 var ProfileService = require('../services/profileService');
 
 module.exports = {
-	index: function(req, res) {
-        var userId = req.session.user.id;
+	index: function(request, reply) {
+        var userId = request.auth.credentials.user.id;
 
         ProfileService.getUserProfiles(userId, function(err, profiles) {
             if(err) {
                 if(err.serverError) {
-                    res.serverError({ errors: err.messages });
+                    reply({ errors: err.messages }).code(500);
                 } else {
-                    res.badRequest({ errors: err.messages });
+                    reply({ errors: err.messages }).code(400);
                 }
             } else {
-                res.ok({
+                reply({
                     profiles: profiles
                 });
             }

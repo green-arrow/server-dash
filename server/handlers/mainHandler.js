@@ -1,9 +1,9 @@
 module.exports = {
-	index: function(req, res) {
-        var userId = req.auth.credentials && req.auth.credentials.user ? req.auth.credentials.user.id : undefined,
-            firstLogin = userId ? req.auth.credentials.user.firstLogin : false;
+	index: function(request, reply) {
+        var userId = request.auth.credentials && request.auth.credentials.user ? request.auth.credentials.user.id : undefined,
+            firstLogin = userId ? request.auth.credentials.user.firstLogin : false;
 
-        res.view('index', { userId: userId, firstLogin: firstLogin });
+        reply.view('index', { userId: userId, firstLogin: firstLogin });
     }
 };
 

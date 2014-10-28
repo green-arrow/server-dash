@@ -1,35 +1,35 @@
 var ProfileWidgetService = require('../services/profileWidgetService');
 
 module.exports = {
-	findOne: function(req, res) {
-        var profileWidgetId = req.param('id');
+	findOne: function(request, reply) {
+        var profileWidgetId = request.params.id;
 
         ProfileWidgetService.findById(profileWidgetId, function(err, profileWidget) {
             if(err) {
                 if(err.serverError) {
-                    res.serverError({ errors: err.messages });
+                    reply({ errors: err.messages }).code(500);
                 } else {
-                    res.badRequest({ errors: err.messages });
+                    reply({ errors: err.messages }).code(400);
                 }
             } else {
-                res.ok({
+                reply({
                     profileWidget: profileWidget
                 });
             }
         });
     },
-    update: function(req, res) {
-        var profileWidgetId = req.param('id');
+    update: function(request, reply) {
+        var profileWidgetId = request.params.id;
 
-        ProfileWidgetService.update(profileWidgetId, req.body.profileWidget, function(err, profileWidget) {
+        ProfileWidgetService.update(profileWidgetId, request.body.profileWidget, function(err, profileWidget) {
             if(err) {
                 if(err.serverError) {
-                    res.serverError({ errors: err.messages });
+                    reply({ errors: err.messages }).code(500);
                 } else {
-                    res.badRequest({ errors: err.messages });
+                    reply({ errors: err.messages }).code(400);
                 }
             } else {
-                res.ok({
+                reply({
                     profileWidget: profileWidget
                 });
             }

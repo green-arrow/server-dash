@@ -19,7 +19,8 @@ var gulp = require('gulp'),
         './public/js/**/*.js'
     ],
     appTemplateSrc = [ './public/js/ember-app/templates/**/*.hbs' ],
-    appLessSrc = [ './public/styles/application.less' ];
+    appLessSrc = [ './public/styles/application.less'],
+    fontSrc = [ './bower_components/components-font-awesome/fonts/*' ];
 
 gulp.task('clean-scripts', function() {
     return gulp.src('./dist/js/application.js', { read: false })
@@ -33,6 +34,11 @@ gulp.task('clean-templates', function() {
 
 gulp.task('clean-styles', function() {
     return gulp.src('./dist/styles', { read: false })
+        .pipe(clean({ force: true }));
+});
+
+gulp.task('clean-fonts', function() {
+    return gulp.src('./dist/fonts', { read: false })
         .pipe(clean({ force: true }));
 });
 
@@ -61,10 +67,15 @@ gulp.task('less', [ 'clean-styles' ], function() {
         .pipe(livereload());
 });
 
+gulp.task('fonts', [ 'clean-fonts' ], function() {
+    gulp.src(fontSrc)
+        .pipe(gulp.dest('./dist/fonts'));
+});
+
 gulp.task('watch', function() {
     gulp.watch('./public/js/**/*.js', [ 'scripts' ]);
     gulp.watch('./public/js/ember-app/templates/**/*.hbs', [ 'templates' ]);
     gulp.watch('./public/styles/*.less', [ 'less' ]);
 });
 
-gulp.task('default', [ 'watch', 'scripts', 'templates', 'less' ]);
+gulp.task('default', [ 'watch', 'scripts', 'templates', 'less', 'fonts' ]);
